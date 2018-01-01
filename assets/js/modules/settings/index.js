@@ -43,8 +43,6 @@ initialzr.addNode('modules', 'settings', () => {
           ammo.appendBefore(titleHtml, domModule);
         }
         globalEvents.dispatchViewReady();
-
-        module.updateStore('settings', () => 123);
       }, 1500);
     });
 

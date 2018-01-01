@@ -2095,10 +2095,6 @@ initialzr.addNode('modules', 'settings', function () {
         ammo.appendBefore(titleHtml, domModule);
       }
       globalEvents.dispatchViewReady();
-
-      module.updateStore('settings', function () {
-        return 123;
-      });
     }, 1500);
   });
 
