@@ -22,7 +22,7 @@ This is a scaffolding app, which can be used as a base for event-driven, single-
 
 Initialzr-app encapsulates all of its functionality in a single global space. A global container so to speak. The definition of this global app container can be found in appDir/assets/js/app/index.js. By default this is `initialzr`. The definitions of all core-related functionality can be found in appDir/assets/js/core. The definitions of all module and widget scripts can be found in appDir/assets/js/modules and appDir/assets/js/widgets respectively.
 
-When initialized, initialzr-app exposes a single global space, accessible from window[{appName}], where {appName} is the name of your global app container. By default this is `initialzr`. You can take a closer look at the methods available under window[{appName}]. You will be mostly interested in the .getNodes() method. Through .getNodes() you can retrieve various app functionality.
+When initialized, initialzr-app exposes a single global space, accessible from window[{appName}], where {appName} is the name of your global app container. By default this is `initialzr`. You can take a closer look at the methods available under window[{appName}]. You will be mostly interested in the .getNode() and .getNodes() methods. Through .getNode() and .getNodes() you can retrieve various app functionality.
 
 Initialzr-app comes pre-configured to handle scss pre-processing and js concatenation. These two methods are uses to create a single stylesheet and a single javascript file, served to index.html - the app's entrypoint. The single unified stylesheet contains all style definitions from appDir/assets/sass. The single unified javascript file contains all script definitions from appDir/assets/js.
 
