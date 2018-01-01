@@ -50,5 +50,5 @@ The app comes with a number of build tools to automate common development tasks,
 
 This application comes packed with two javascript libraries:
 
- - `ammo` - provides general-purpose utility belt for building front-end applications
- - `router` - provides a light-weight hash-based router, utilizing the window.location API
+ - `ammo` - provides general-purpose utility belt for building front-end applications. This is a base lib (base libs can be used by other libs). It resides in appDir/assets/js/libs/_base/ammo
+ - `router` - provides a light-weight, hash-based router via the window.location API. This lib resides in appDir/assets/js/libs
