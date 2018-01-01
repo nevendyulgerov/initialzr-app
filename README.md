@@ -1,6 +1,6 @@
 # Initialzr App
 
-Base for custom event-driven single-page applications, created with the Ammo API.
+Base for custom, event-driven, single-page applications, created with the Ammo API.
 
 ## Requirements
 * npm

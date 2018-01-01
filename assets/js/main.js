@@ -2091,7 +2091,7 @@ initialzr.addNode('modules', 'settings', function () {
     settings: { type: 'object', value: {} }
   };
 
-  var base = initialzr.getNode('modules', 'base')();
+  var base = initialzr.getNode('modules', 'base')({ name: 'settings' });
   var module = ammo.app(props, store).schema('module').inherit(base);
   var globalEvents = initialzr.getNode('core', 'globalEvents')();
 

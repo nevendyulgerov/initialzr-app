@@ -11,7 +11,7 @@ initialzr.addNode('modules', 'settings', () => {
     settings: { type: 'object', value: {} }
   };
 
-  const base = initialzr.getNode('modules', 'base')();
+  const base = initialzr.getNode('modules', 'base')({ name: 'settings' });
   const module = ammo.app(props, store).schema('module').inherit(base);
   const globalEvents = initialzr.getNode('core', 'globalEvents')();
 
