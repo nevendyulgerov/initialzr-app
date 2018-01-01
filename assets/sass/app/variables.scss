@@ -1,0 +1,127 @@
+/*
+ * App variables
+ */
+
+/// White
+/// @type Color
+$white: #fff;
+
+/// Grey
+/// @type Color
+$grey: #cccccc;
+
+/// Stark
+/// @type Color
+$light-grey: #e7dfdd;
+
+/// Concrete Grey
+/// @type Color
+$dark-grey: #888888;
+
+/// Red
+/// @type Color
+$red: red;
+
+/// Light Red
+/// @type Color
+$light-red: rgba(217, 30, 24, 0.5) !default;
+
+/// Blue
+/// @type Color
+$blue: #4a86e8;
+
+/// Light Blue
+/// @type Color
+$light-blue: #7dbbe8;
+
+/// Bright Blue
+/// @type Bright Blue
+$bright-blue: #0077CC;
+
+/// Green
+/// @type Color
+$green: #4cae4c;
+
+/// Light Green
+/// @type Color
+$light-green: rgb(144, 198, 149) !default;
+
+/// Bright Green
+/// @type Color
+$bright-green: #6aa84f;
+
+/// Yellow
+/// @type Color
+$yellow: rgb(255, 173, 0) !default;
+
+/// Light Yellow
+/// @type Color
+$light-yellow: rgba(255, 173, 0, 0.5);
+
+/// Bright Yellow
+/// @type Color
+$bright-yellow: #f1c40f !default;
+
+/// Black
+/// @type Color
+$black: #000;
+
+/// Void
+/// @type Abstract Color
+$void: #0e0b16;
+
+/// Dimmed
+/// @type Abstract Color
+$dimmed: #333 !default;
+
+/// Dark Metallic
+/// @type Abstract Color
+$dark-metallic: rgb(49, 49, 52) !default;
+
+/// Fuschia
+/// @type Abstract Color
+$fuschia: #a239ca;
+
+/// Jewel
+/// @type Abstract Color
+$jewel: #4714f6;
+
+/// Box Shadow 0
+/// @type Box Shadow
+$box-shadow-0: 0 1px 1px 0 rgba(0,0,0,0.16),0 1px 1px 0 rgba(239,239,239,0.12);
+
+/// Box Shadow 1
+/// @type Box Shadow
+$box-shadow-1: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+
+/// Box Shadow 2
+/// @type Box Shadow
+$box-shadow-2: 0 8px 17px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+
+/// Box Shadow Inverted 2
+/// @type Box Shadow
+$box-shadow-inverted-2: 0 8px 17px 8px rgba(0,0,0,0.2),0 6px 20px 6px rgba(0,0,0,0.19);
+
+/// Courier New
+/// @type Font
+$courier-new: 'Courier New', sans-serif;
+
+/// Helvetica
+/// @type Font
+$helvetica: 'Helvetica', sans-serif;
+
+
+/// Breakpoints map
+/// @prop {String} keys - Keys are identifiers mapped to a given length
+/// @prop {Map} values - Values are actual breakpoints expressed in pixels
+$breakpoints: (
+  'mobile-xs': (max-width: 320px),
+  'mobile-sm': (max-width: 420px),
+  'mobile-md': (max-width: 640px),
+  'mobile-lg': (max-width: 768px),
+  'mobile-xl': (max-width: 1024px),
+  'desktop-sm': (max-width: 1280px),
+  'desktop-md': (max-width: 1366px),
+  'desktop-lg': (max-width: 1440px),
+  'desktop-xl': (max-width: 1980px),
+) !default;

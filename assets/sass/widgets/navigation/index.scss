@@ -1,0 +1,59 @@
+
+/**
+ * Styles for widget 'navigation'
+ */
+
+[data-widget="navigation"] {
+  ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      width: 100%;
+      text-transform: capitalize;
+
+      a {
+        display: block;
+        text-align: center;
+        padding: 15px 0;
+        color: $bright-blue;
+        box-shadow: $box-shadow-0;
+      }
+    }
+  }
+
+  &[data-layout="arrows"] {
+    ul {
+      li {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: nowrap;
+        margin: 10px 0;
+        border-top: 1px solid $bright-blue;
+        border-bottom: 1px solid $bright-blue;
+        background-color: $white;
+
+        .label {
+          display: block;
+          padding: 10px;
+          text-align: left;
+          width: 100%;
+          color: $bright-blue;
+        }
+
+        .trigger.go-to {
+          padding: 10px 20px;
+          color: $bright-blue;
+          border: none;
+          border-left: 1px solid $bright-blue;
+          background-color: $white;
+
+          .icon {
+            pointer-events: none;
+          }
+        }
+      }
+    }
+  }
+}

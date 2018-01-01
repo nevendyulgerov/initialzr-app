@@ -1,0 +1,64 @@
+/**
+ * Styles for module 'footer'
+ */
+
+[data-module="footer"] {
+  height: 60px;
+  background-color: $void;
+  color: $light-grey;
+  box-shadow: $box-shadow-inverted-2 !important;
+
+  nav {
+    ul {
+      li {
+        width: auto;
+        display: inline-block;
+        margin: 0 20px 0 0;
+        padding: 0;
+        font-weight: 300;
+
+        &:last-child {
+          margin: 0;
+        }
+
+        &:last-child {
+          a {
+            &:after {
+              display: none;
+            }
+          }
+        }
+
+        a {
+          position: relative;
+          padding: 20px 10px;
+          border: none;
+          background-color: transparent;
+          box-shadow: none;
+
+          &:hover,
+          &.active {
+            color: $fuschia;
+            background-color: transparent;
+          }
+
+          &:after {
+            content: '';
+            display: block;
+            position: absolute;
+            top: 0;
+            right: -15px;
+            width: 1px;
+            height: 100%;
+            background-color: $jewel;
+          }
+
+          &:hover {
+            color: $fuschia;
+            background-color: transparent;
+          }
+        }
+      }
+    }
+  }
+}

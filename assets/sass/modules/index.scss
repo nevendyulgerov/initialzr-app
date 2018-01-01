@@ -1,0 +1,20 @@
+
+/**
+ * Styles for module '_base'
+ */
+
+[data-module] {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: $box-shadow-0;
+  color: $light-grey;
+
+  .title {
+    font-size: 38px;
+    font-weight: 600;
+    text-shadow: 4px 3px 0 $fuschia;
+  }
+}

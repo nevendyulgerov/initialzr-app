@@ -1,0 +1,4 @@
+## Ignore the following paths:
+
+dist/
+node_modules/

@@ -1,0 +1,39 @@
+
+/**
+ * Core styles
+ */
+
+body {
+  font-family: $helvetica;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: $dimmed;
+  background-color: $light-grey;
+  position: relative;
+  padding: 0;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+a {
+  color: $light-blue;
+  text-decoration: none;
+}
+
+p {
+  margin: 10px 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 10px 0;
+}
+
+button {
+  border: none;
+  background-color: $grey;
+  cursor: pointer;
+
+  * {
+    pointer-events: none;
+  }
+}
