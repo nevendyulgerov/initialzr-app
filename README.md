@@ -4,13 +4,15 @@ Base for custom event-driven single-page applications, created with the Ammo API
 
 ## Requirements
 * npm
+* [http-server](https://www.npmjs.com/package/http-server)
 
 ## How to Run:
 
 1. [Download](https://github.com/nevendyulgerov/initialzr-app/archive/master.zip) or [Clone](https://github.com/nevendyulgerov/initialzr-app.git) the Repository.
-2. Run `npm install` to install the project dependencies.
-3. Run the app's server using `npm run server`. App will become available at: `localhost:8080`.
-4. Run the app's main build task `npm run build`.
+2. Install globally http-server: ` npm install http-server -g`
+3. Run `npm install` to install the project dependencies.
+4. Run the app's server using `npm run server`. App will become available at: `localhost:8080`.
+5. Run the app's main build task `npm run build`.
 
 ## Notes
 
