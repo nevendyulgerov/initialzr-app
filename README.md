@@ -30,4 +30,4 @@ The app comes with a number of build tools to automate common development tasks,
 
 - gulp module --option {appName} --option {moduleName} - utility for creating modules in the app's context. The new module's files will reside in appDir/assets/js/modules/{moduleName}/ and appDir/assets/sass/modules/{moduleName}
 
-- gulp widget --option {appName} --option {widgetName} - utility for creating widgets in the app's context. The new widgets's files will reside in appDir/assets/js/widgets/{moduleName}/ and appDir/assets/sass/widgets/{moduleName}
+- gulp widget --option {appName} --option {widgetName} - utility for creating widgets in the app's context. The new widgets's files will reside in appDir/assets/js/widgets/{widgetName}/ and appDir/assets/sass/widgets/{widgetName}
