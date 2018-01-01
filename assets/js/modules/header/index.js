@@ -34,20 +34,37 @@ initialzr.addNode('modules', 'header', () => {
     `));
 
   module.configure('events')
-    .node('onToggleMenu', callback => ammo.delegateEvent('click', '.trigger.toggle-menu', callback));
+    .node('onToggleMenu', callback => ammo.delegateEvent('click', '.trigger.toggle-menu', callback))
+    .node('onResize', callback => window.addEventListener('resize', callback));
 
   module.configure('renderers')
     .node('toggleMenu', event => {
-      const target = event.target;
+      const button = event.target;
       const nav = ammo.select('[data-module="header"] nav').get();
-      const isActive = target.classList.contains('active');
+      const navHeight = nav.clientHeight;
 
-      if (isActive) {
-        nav.classList.remove('active');
-        target.classList.remove('active');
-      } else {
+      const isActive = button.classList.contains('active');
+
+      if (!isActive) {
+        ammo.select(nav).style('top', `-${navHeight}px`);
         nav.classList.add('active');
-        target.classList.add('active');
+        button.classList.add('active');
+      } else {
+        ammo.select(nav).style('top', `0px`);
+        nav.removeAttribute('class');
+        button.classList.remove('active');
+      }
+    })
+    .node('resizeHeader', () => {
+      const width = window.innerWidth;
+      const mobileWidth = 640;
+
+      if (width >= mobileWidth) {
+        const nav = ammo.select('[data-module="header"] nav').get();
+        const button = ammo.select('.trigger.toggle-menu').get();
+        ammo.select(nav).style('top', `0px`);
+        nav.removeAttribute('class');
+        button.classList.remove('active');
       }
     });
 
@@ -67,9 +84,11 @@ initialzr.addNode('modules', 'header', () => {
       const menuButtonUI = ui.menuButton();
       const navigationUI = ui.navigation(navigationItems);
       const indexUI = ui.index(menuButtonUI, navigationUI);
+      const buffer = ammo.buffer();
 
       renderers.render(indexUI);
       events.onToggleMenu(renderers.toggleMenu);
+      events.onResize(() => buffer('resize.module.header', 150, () => renderers.resizeHeader()));
     });
 
   module.callNode('actions', 'init');

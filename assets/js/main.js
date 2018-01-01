@@ -1969,19 +1969,36 @@ initialzr.addNode('modules', 'header', function () {
 
   module.configure('events').node('onToggleMenu', function (callback) {
     return ammo.delegateEvent('click', '.trigger.toggle-menu', callback);
+  }).node('onResize', function (callback) {
+    return window.addEventListener('resize', callback);
   });
 
   module.configure('renderers').node('toggleMenu', function (event) {
-    var target = event.target;
+    var button = event.target;
     var nav = ammo.select('[data-module="header"] nav').get();
-    var isActive = target.classList.contains('active');
+    var navHeight = nav.clientHeight;
 
-    if (isActive) {
-      nav.classList.remove('active');
-      target.classList.remove('active');
-    } else {
+    var isActive = button.classList.contains('active');
+
+    if (!isActive) {
+      ammo.select(nav).style('top', '-' + navHeight + 'px');
       nav.classList.add('active');
-      target.classList.add('active');
+      button.classList.add('active');
+    } else {
+      ammo.select(nav).style('top', '0px');
+      nav.removeAttribute('class');
+      button.classList.remove('active');
+    }
+  }).node('resizeHeader', function () {
+    var width = window.innerWidth;
+    var mobileWidth = 640;
+
+    if (width >= mobileWidth) {
+      var nav = ammo.select('[data-module="header"] nav').get();
+      var button = ammo.select('.trigger.toggle-menu').get();
+      ammo.select(nav).style('top', '0px');
+      nav.removeAttribute('class');
+      button.classList.remove('active');
     }
   });
 
@@ -2000,9 +2017,15 @@ initialzr.addNode('modules', 'header', function () {
     var menuButtonUI = ui.menuButton();
     var navigationUI = ui.navigation(navigationItems);
     var indexUI = ui.index(menuButtonUI, navigationUI);
+    var buffer = ammo.buffer();
 
     renderers.render(indexUI);
     events.onToggleMenu(renderers.toggleMenu);
+    events.onResize(function () {
+      return buffer('resize.module.header', 150, function () {
+        return renderers.resizeHeader();
+      });
+    });
   });
 
   module.callNode('actions', 'init');

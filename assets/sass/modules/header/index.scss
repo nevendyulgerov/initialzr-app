@@ -48,6 +48,8 @@
   nav {
     position: relative;
     box-shadow: $box-shadow-1;
+    top: 0;
+    left: 0;
 
     ul {
       li {
@@ -75,15 +77,10 @@
     @include respond-to('mobile-md') {
       position: absolute;
       width: 100%;
-      top: -20vh;
+      top: 0;
       left: 0;
       z-index: -1;
       transition: all 0.3s ease-in-out;
-
-      &.active {
-        top: 60px;
-        transition: all 0.3s ease-in-out;
-      }
 
       ul {
         li {
