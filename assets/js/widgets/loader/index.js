@@ -28,9 +28,10 @@ initialzr.addNode('widgets', 'loader', (domWidget, props) => {
   widget.configure('actions')
     .node('init', () => {
       const { ui, renderers } = widget.getNodes();
-      const template = ui.index();
+      const indexUI = ui.index();
 
-      renderers.render(template);
+      renderers.render(indexUI);
+
       globalEvents
         .dispatchWidgetReady(props.widget)
         .interceptViewReady(() => renderers.hide())

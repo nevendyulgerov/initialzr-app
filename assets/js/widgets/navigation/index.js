@@ -52,9 +52,8 @@ initialzr.addNode('widgets', 'navigation', (domWidget, props) => {
         });
       });
 
-      const template = ui.index(items);
-
-      renderers.render(template);
+      const indexUI = ui.index(items);
+      renderers.render(indexUI);
 
       events.onSelectItem(event => {
         event.preventDefault();

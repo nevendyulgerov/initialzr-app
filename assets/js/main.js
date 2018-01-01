@@ -2174,9 +2174,10 @@ initialzr.addNode('widgets', 'loader', function (domWidget, props) {
         ui = _widget$getNodes.ui,
         renderers = _widget$getNodes.renderers;
 
-    var template = ui.index();
+    var indexUI = ui.index();
 
-    renderers.render(template);
+    renderers.render(indexUI);
+
     globalEvents.dispatchWidgetReady(props.widget).interceptViewReady(function () {
       return renderers.hide();
     }).interceptWidgetChange(props.widget, function (event, options) {
@@ -2244,9 +2245,8 @@ initialzr.addNode('widgets', 'navigation', function (domWidget, props) {
       });
     });
 
-    var template = ui.index(items);
-
-    renderers.render(template);
+    var indexUI = ui.index(items);
+    renderers.render(indexUI);
 
     events.onSelectItem(function (event) {
       event.preventDefault();
