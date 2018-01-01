@@ -64,11 +64,11 @@ initialzr.addNode('modules', 'header', () => {
     .node('init', () => {
       const { ui, events, renderers, actions } = module.getNodes();
       const navigationItems = actions.getNavigationItems();
-      const menuButtonHtml = ui.menuButton();
-      const navigationHtml = ui.navigation(navigationItems);
-      const templateHtml = ui.index(menuButtonHtml, navigationHtml);
+      const menuButtonUI = ui.menuButton();
+      const navigationUI = ui.navigation(navigationItems);
+      const indexUI = ui.index(menuButtonUI, navigationUI);
 
-      renderers.render(templateHtml);
+      renderers.render(indexUI);
       events.onToggleMenu(renderers.toggleMenu);
     });
 

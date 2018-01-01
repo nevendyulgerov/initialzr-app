@@ -21,9 +21,9 @@ initialzr.addNode('modules', 'login', () => {
   module.overwrite('actions')
     .node('init', () => {
       const { ui, renderers } = module.getNodes();
-      const htmlTemplate = ui.index();
+      const indexUI = ui.index();
 
-      renderers.render(htmlTemplate);
+      renderers.render(indexUI);
 
       setTimeout(() => {
         const domModule = ammo.select('[data-module="login"]').get();
@@ -31,10 +31,10 @@ initialzr.addNode('modules', 'login', () => {
           return false;
         }
 
-        const titleHtml = ui.title('login');
+        const titleUI = ui.title('login');
 
         if (domModule) {
-          ammo.appendBefore(titleHtml, domModule);
+          renderers.renderTitle(titleUI);
         }
         globalEvents.dispatchViewReady();
       }, 1500);

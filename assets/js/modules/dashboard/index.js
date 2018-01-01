@@ -29,10 +29,10 @@ initialzr.addNode('modules', 'dashboard', () => {
         if (!domModule) {
           return false;
         }
-        const titleHtml = ui.title('dashboard');
+        const titleUI = ui.title('dashboard');
 
         if (domModule) {
-          ammo.appendBefore(titleHtml, domModule);
+          ammo.appendBefore(titleUI, domModule);
         }
         globalEvents.dispatchViewReady();
       }, 1500);

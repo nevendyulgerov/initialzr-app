@@ -26,19 +26,20 @@ initialzr.addNode('modules', 'settings', () => {
   module.overwrite('actions')
     .node('init', () => {
       const { ui, renderers } = module.getNodes();
-      const htmlTemplate = ui.index();
+      const indexUI = ui.index();
 
-      renderers.render(htmlTemplate);
+      renderers.render(indexUI);
+
       setTimeout(() => {
         const domModule = ammo.select('[data-module="settings"]').get();
         if (!domModule) {
           return false;
         }
 
-        const titleHtml = ui.title('settings');
+        const titleUI = ui.title('login');
 
         if (domModule) {
-          ammo.appendBefore(titleHtml, domModule);
+          renderers.renderTitle(titleUI);
         }
         globalEvents.dispatchViewReady();
       }, 1500);

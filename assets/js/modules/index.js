@@ -17,17 +17,21 @@ initialzr.addNode('modules', 'base', options => {
     `));
 
   module.configure('renderers')
-    .node('render', html => {
+    .node('render', ui => {
       const target = ammo.select('[data-app]').get();
-      ammo.appendBefore(html, target);
+      ammo.appendBefore(ui, target);
+    })
+    .node('renderTitle', ui => {
+      const domModule = ammo.select(`[data-module="${options.name}"`).get();
+      ammo.appendBefore(ui, domModule);
     });
 
   module.configure('actions')
     .node('init', () => {
       const { ui, renderers } = module.getNodes();
-      const htmlTemplate = ui.index();
+      const indexUI = ui.index();
 
-      renderers.render(htmlTemplate);
+      renderers.render(indexUI);
     });
 
   return module;
