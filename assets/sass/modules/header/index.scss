@@ -103,3 +103,39 @@
     }
   }
 }
+
+body[data-view="home"] {
+  [data-module="header"] {
+    nav {
+      ul {
+        li {
+          border-right: 1px solid $jewel;
+        }
+      }
+    }
+  }
+}
+
+body[data-view="login"] {
+  [data-module="header"] {
+    nav {
+      ul {
+        li {
+          border-right: 1px solid $purple;
+        }
+      }
+    }
+  }
+}
+
+body[data-view="settings"] {
+  [data-module="header"] {
+    nav {
+      ul {
+        li {
+          border-right: 1px solid $bright-blue;
+        }
+      }
+    }
+  }
+}

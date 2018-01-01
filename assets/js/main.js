@@ -519,7 +519,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
      * @returns {boolean}
      */
     var hasMethod = function hasMethod(obj, method) {
-      return hasProp(obj, method) && isFunc(method);
+      return hasProp(obj, method) && isFunc(obj[method]);
     };
 
     /**
@@ -1723,7 +1723,7 @@ initialzr.addNode('core', 'manager', function () {
       var props = normalizeProps(widget.dataset);
       var widgetName = props.widget;
 
-      if (ammo.hasProp(widgets, widgetName)) {
+      if (ammo.hasMethod(widgets, widgetName)) {
 
         // check if widget is unique for the current view
         props.isUnique = processed.indexOf(widgetName) === -1;
@@ -1770,6 +1770,15 @@ initialzr.addNode('core', 'manager', function () {
   }).node('domContainsModule', function (moduleName) {
     var module = ammo.select('[data-module="' + moduleName + '"]').get();
     return ammo.isObj(module);
+  }).node('getViewName', function () {
+    var view = ammo.select('[data-module][data-view]').get();
+    return view.getAttribute('data-module');
+  }).node('notifyBodyUponViewLoading', function (getViewName) {
+    globalEvents.interceptViewLoading(function () {
+      var viewName = getViewName();
+      var body = ammo.select('body').get();
+      body.setAttribute('data-view', viewName);
+    });
   });
 
   return {
@@ -1781,8 +1790,13 @@ initialzr.addNode('core', 'manager', function () {
       module.getNode('actions', 'removeModules')(persistentModules);
       return this;
     },
+    notifyBodyUponViewLoading: function notifyBodyUponViewLoading() {
+      module.getNode('actions', 'notifyBodyUponViewLoading')(module.getNode('actions', 'getViewName'));
+      return this;
+    },
 
-    domContainsModule: module.getNode('actions', 'domContainsModule')
+    domContainsModule: module.getNode('actions', 'domContainsModule'),
+    getViewName: module.getNode('actions', 'getViewName')
   };
 });
 ;'use strict';
@@ -1805,7 +1819,7 @@ initialzr.addNode('core', 'router', function () {
 
     if (!manager.domContainsModule('header')) {
       modules.header();
-      manager.monitorWidgets();
+      manager.monitorWidgets().notifyBodyUponViewLoading();
     }
   }).afterRoute(modules.footer).route('/', modules.dashboard).route('/login', modules.login).route('/settings', modules.settings);
 });
@@ -1882,7 +1896,7 @@ initialzr.addNode('modules', 'dashboard', function () {
   });
 
   module.overwrite('ui').node('index', function () {
-    return '\n      <main data-module="dashboard">\n        <div data-widget="loader" data-show-on="loading"></div>\n      </main>\n    ';
+    return '\n      <main data-module="dashboard" data-view>\n        <div data-widget="loader" data-show-on="loading"></div>\n      </main>\n    ';
   });
 
   module.overwrite('actions').node('init', function () {
@@ -1962,7 +1976,7 @@ initialzr.addNode('modules', 'header', function () {
 
   var module = initialzr.getNode('modules', 'base')({ name: 'header' });
 
-  module.configure('ui').node('menuButton', function () {
+  module.configure('ui').node('button', function () {
     return '\n      <button class="trigger toggle-menu">\n        <span class="icon fa fa-bars"></span>\n      </button>\n    ';
   }).node('navigation', function (items) {
     return '\n      <nav>\n        <div data-widget="navigation" data-show-on="ready">\n          ' + items.map(function (item) {
@@ -1970,8 +1984,8 @@ initialzr.addNode('modules', 'header', function () {
     }).join('') + '\n        </div>\n      </nav>\n    ';
   });
 
-  module.overwrite('ui').node('index', function (menuButtonUI, navigationUI) {
-    return '\n      <header data-module="header">\n        ' + menuButtonUI + '\n        ' + navigationUI + '\n      </header>\n    ';
+  module.overwrite('ui').node('index', function (buttonUI, navigationUI) {
+    return '\n      <header data-module="header">\n        ' + buttonUI + '\n        ' + navigationUI + '\n      </header>\n    ';
   });
 
   module.configure('events').node('onToggleMenu', function (callback) {
@@ -1984,7 +1998,6 @@ initialzr.addNode('modules', 'header', function () {
     var button = event.target;
     var nav = ammo.select('[data-module="header"] nav').get();
     var navHeight = nav.clientHeight;
-
     var isActive = button.classList.contains('active');
 
     if (!isActive) {
@@ -1992,7 +2005,7 @@ initialzr.addNode('modules', 'header', function () {
       nav.classList.add('active');
       button.classList.add('active');
     } else {
-      ammo.select(nav).style('top', '0px');
+      ammo.select(nav).style('top', 0 + 'px');
       nav.removeAttribute('class');
       button.classList.remove('active');
     }
@@ -2003,6 +2016,7 @@ initialzr.addNode('modules', 'header', function () {
     if (width >= mobileWidth) {
       var nav = ammo.select('[data-module="header"] nav').get();
       var button = ammo.select('.trigger.toggle-menu').get();
+
       ammo.select(nav).style('top', '0px');
       nav.removeAttribute('class');
       button.classList.remove('active');
@@ -2021,9 +2035,9 @@ initialzr.addNode('modules', 'header', function () {
         actions = _module$getNodes.actions;
 
     var navigationItems = actions.getNavigationItems();
-    var menuButtonUI = ui.menuButton();
+    var buttonUI = ui.button();
     var navigationUI = ui.navigation(navigationItems);
-    var indexUI = ui.index(menuButtonUI, navigationUI);
+    var indexUI = ui.index(buttonUI, navigationUI);
     var buffer = ammo.buffer();
 
     renderers.render(indexUI);
@@ -2057,7 +2071,7 @@ initialzr.addNode('modules', 'login', function () {
   });
 
   module.overwrite('ui').node('index', function () {
-    return '\n      <main data-module="login">\n        <div data-widget="loader" data-show-on="loading"></div>\n      </main>\n    ';
+    return '\n      <main data-module="login" data-view>\n        <div data-widget="loader" data-show-on="loading"></div>\n      </main>\n    ';
   });
 
   module.overwrite('actions').node('init', function () {
@@ -2112,7 +2126,7 @@ initialzr.addNode('modules', 'settings', function () {
   });
 
   module.overwrite('ui').node('index', function () {
-    return '\n      <main data-module="settings">\n        <div data-widget="loader" data-show-on="loading"></div>\n      </main>\n    ';
+    return '\n      <main data-module="settings" data-view>\n        <div data-widget="loader" data-show-on="loading"></div>\n      </main>\n    ';
   });
 
   module.overwrite('actions').node('init', function () {
@@ -2131,7 +2145,7 @@ initialzr.addNode('modules', 'settings', function () {
         return false;
       }
 
-      var titleUI = ui.title('login');
+      var titleUI = ui.title('settings');
 
       if (hasModule) {
         renderers.renderTitle(titleUI);

@@ -18,7 +18,9 @@ initialzr.addNode('core', 'router', () => {
 
       if (!manager.domContainsModule('header')) {
         modules.header();
-        manager.monitorWidgets();
+        manager
+          .monitorWidgets()
+          .notifyBodyUponViewLoading();
       }
     })
     .afterRoute(modules.footer)

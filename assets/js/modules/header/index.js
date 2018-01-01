@@ -10,7 +10,7 @@ initialzr.addNode('modules', 'header', () => {
   const module = initialzr.getNode('modules', 'base')({ name: 'header' });
 
   module.configure('ui')
-    .node('menuButton', () => (`
+    .node('button', () => (`
       <button class="trigger toggle-menu">
         <span class="icon fa fa-bars"></span>
       </button>
@@ -26,9 +26,9 @@ initialzr.addNode('modules', 'header', () => {
     `));
 
   module.overwrite('ui')
-    .node('index', (menuButtonUI, navigationUI) => (`
+    .node('index', (buttonUI, navigationUI) => (`
       <header data-module="header">
-        ${menuButtonUI}
+        ${buttonUI}
         ${navigationUI}
       </header>
     `));
@@ -42,7 +42,6 @@ initialzr.addNode('modules', 'header', () => {
       const button = event.target;
       const nav = ammo.select('[data-module="header"] nav').get();
       const navHeight = nav.clientHeight;
-
       const isActive = button.classList.contains('active');
 
       if (!isActive) {
@@ -50,7 +49,7 @@ initialzr.addNode('modules', 'header', () => {
         nav.classList.add('active');
         button.classList.add('active');
       } else {
-        ammo.select(nav).style('top', `0px`);
+        ammo.select(nav).style('top', `${0}px`);
         nav.removeAttribute('class');
         button.classList.remove('active');
       }
@@ -62,6 +61,7 @@ initialzr.addNode('modules', 'header', () => {
       if (width >= mobileWidth) {
         const nav = ammo.select('[data-module="header"] nav').get();
         const button = ammo.select('.trigger.toggle-menu').get();
+
         ammo.select(nav).style('top', `0px`);
         nav.removeAttribute('class');
         button.classList.remove('active');
@@ -81,9 +81,9 @@ initialzr.addNode('modules', 'header', () => {
     .node('init', () => {
       const { ui, events, renderers, actions } = module.getNodes();
       const navigationItems = actions.getNavigationItems();
-      const menuButtonUI = ui.menuButton();
+      const buttonUI = ui.button();
       const navigationUI = ui.navigation(navigationItems);
-      const indexUI = ui.index(menuButtonUI, navigationUI);
+      const indexUI = ui.index(buttonUI, navigationUI);
       const buffer = ammo.buffer();
 
       renderers.render(indexUI);

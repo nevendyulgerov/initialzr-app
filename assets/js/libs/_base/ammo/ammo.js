@@ -302,7 +302,7 @@
      * @param method
      * @returns {boolean}
      */
-    const hasMethod = (obj, method) => hasProp(obj, method) && isFunc(method);
+    const hasMethod = (obj, method) => hasProp(obj, method) && isFunc(obj[method]);
 
 
     /**

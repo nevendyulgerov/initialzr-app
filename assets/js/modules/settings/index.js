@@ -21,7 +21,7 @@ initialzr.addNode('modules', 'settings', () => {
 
   module.overwrite('ui')
     .node('index', () => (`
-      <main data-module="settings">
+      <main data-module="settings" data-view>
         <div data-widget="loader" data-show-on="loading"></div>
       </main>
     `));
@@ -40,7 +40,7 @@ initialzr.addNode('modules', 'settings', () => {
           return false;
         }
 
-        const titleUI = ui.title('login');
+        const titleUI = ui.title('settings');
 
         if (hasModule) {
           renderers.renderTitle(titleUI);

@@ -16,7 +16,7 @@ initialzr.addNode('modules', 'dashboard', () => {
 
   module.overwrite('ui')
     .node('index', () => (`
-      <main data-module="dashboard">
+      <main data-module="dashboard" data-view>
         <div data-widget="loader" data-show-on="loading"></div>
       </main>
     `));

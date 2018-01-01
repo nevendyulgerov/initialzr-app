@@ -29,7 +29,7 @@ initialzr.addNode('core', 'manager', () => {
         const props = normalizeProps(widget.dataset);
         const widgetName = props.widget;
 
-        if (ammo.hasProp(widgets, widgetName)) {
+        if (ammo.hasMethod(widgets, widgetName)) {
 
           // check if widget is unique for the current view
           props.isUnique = processed.indexOf(widgetName) === -1;
@@ -69,6 +69,17 @@ initialzr.addNode('core', 'manager', () => {
     .node('domContainsModule', moduleName => {
       const module = ammo.select(`[data-module="${moduleName}"]`).get();
       return ammo.isObj(module);
+    })
+    .node('getViewName', () => {
+      const view = ammo.select('[data-module][data-view]').get();
+      return view.getAttribute('data-module');
+    })
+    .node('notifyBodyUponViewLoading', getViewName => {
+      globalEvents.interceptViewLoading(() => {
+        const viewName = getViewName();
+        const body = ammo.select('body').get();
+        body.setAttribute('data-view', viewName);
+      });
     });
 
   return {
@@ -80,6 +91,12 @@ initialzr.addNode('core', 'manager', () => {
       module.getNode('actions', 'removeModules')(persistentModules);
       return this;
     },
-    domContainsModule: module.getNode('actions', 'domContainsModule')
+    notifyBodyUponViewLoading() {
+      module.getNode('actions', 'notifyBodyUponViewLoading')(
+        module.getNode('actions', 'getViewName'));
+      return this;
+    },
+    domContainsModule: module.getNode('actions', 'domContainsModule'),
+    getViewName: module.getNode('actions', 'getViewName')
   };
 });

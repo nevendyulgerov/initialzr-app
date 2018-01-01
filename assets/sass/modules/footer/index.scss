@@ -62,3 +62,51 @@
     }
   }
 }
+
+body[data-view="home"] {
+  [data-module="footer"] {
+    nav {
+      ul {
+        li {
+          a {
+            &:after {
+              background-color: $jewel;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+body[data-view="login"] {
+  [data-module="footer"] {
+    nav {
+      ul {
+        li {
+          a {
+            &:after {
+              background-color: $purple;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+body[data-view="settings"] {
+  [data-module="footer"] {
+    nav {
+      ul {
+        li {
+          a {
+            &:after {
+              background-color: $bright-blue;
+            }
+          }
+        }
+      }
+    }
+  }
+}
