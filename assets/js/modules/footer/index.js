@@ -16,11 +16,7 @@ initialzr.addNode('modules', 'footer', () => {
         </div>
       </nav>
     `))
-    .node('index', navigationUI => (`
-      <footer data-module="footer">
-        ${navigationUI}
-      </footer>
-    `));
+    .node('index', navigationUI => (`<footer data-module="footer">${navigationUI}</footer>`));
 
   module.overwrite('actions')
     .node('getNavigationItems', () => {

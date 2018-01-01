@@ -1842,9 +1842,12 @@ initialzr.addNode('modules', 'base', function (options) {
     return '\n      <div data-module="' + options.name + '">\n        <span class="title">Module [' + options.name.toUpperCase() + ']</span>\n      </div>\n    ';
   });
 
-  module.configure('renderers').node('render', function (html) {
+  module.configure('renderers').node('render', function (ui) {
     var target = ammo.select('[data-app]').get();
-    ammo.appendBefore(html, target);
+    ammo.appendBefore(ui, target);
+  }).node('renderTitle', function (ui) {
+    var domModule = ammo.select('[data-module="' + options.name + '"').get();
+    ammo.appendBefore(ui, domModule);
   });
 
   module.configure('actions').node('init', function () {
@@ -1852,9 +1855,9 @@ initialzr.addNode('modules', 'base', function (options) {
         ui = _module$getNodes.ui,
         renderers = _module$getNodes.renderers;
 
-    var htmlTemplate = ui.index();
+    var indexUI = ui.index();
 
-    renderers.render(htmlTemplate);
+    renderers.render(indexUI);
   });
 
   return module;
@@ -1876,7 +1879,7 @@ initialzr.addNode('modules', 'dashboard', function () {
   module.overwrite('ui').node('index', function () {
     return '\n      <main data-module="dashboard">\n        <div data-widget="loader" data-show-on="loading"></div>\n      </main>\n    ';
   }).node('title', function (title) {
-    return '\n      <span class="title">' + title.toUpperCase() + '</span>\n    ';
+    return '<span class="title">' + title.toUpperCase() + '</span>';
   });
 
   module.overwrite('actions').node('init', function () {
@@ -1892,10 +1895,10 @@ initialzr.addNode('modules', 'dashboard', function () {
       if (!domModule) {
         return false;
       }
-      var titleHtml = ui.title('dashboard');
+      var titleUI = ui.title('dashboard');
 
       if (domModule) {
-        ammo.appendBefore(titleHtml, domModule);
+        ammo.appendBefore(titleUI, domModule);
       }
       globalEvents.dispatchViewReady();
     }, 1500);
@@ -1918,7 +1921,7 @@ initialzr.addNode('modules', 'footer', function () {
       return '\n            <div class="item" data-href="' + item.url + '">' + item.name + '</div>\n          ';
     }).join('') + '\n        </div>\n      </nav>\n    ';
   }).node('index', function (navigationUI) {
-    return '\n      <footer data-module="footer">\n        ' + navigationUI + '\n      </footer>\n    ';
+    return '<footer data-module="footer">' + navigationUI + '</footer>';
   });
 
   module.overwrite('actions').node('getNavigationItems', function () {
@@ -1960,8 +1963,8 @@ initialzr.addNode('modules', 'header', function () {
     }).join('') + '\n        </div>\n      </nav>\n    ';
   });
 
-  module.overwrite('ui').node('index', function (menuButtonHtml, navigationHtml) {
-    return '\n      <header data-module="header">\n        ' + menuButtonHtml + '\n        ' + navigationHtml + '\n      </header>\n    ';
+  module.overwrite('ui').node('index', function (menuButtonUI, navigationUI) {
+    return '\n      <header data-module="header">\n        ' + menuButtonUI + '\n        ' + navigationUI + '\n      </header>\n    ';
   });
 
   module.configure('events').node('onToggleMenu', function (callback) {
@@ -1994,11 +1997,11 @@ initialzr.addNode('modules', 'header', function () {
         actions = _module$getNodes.actions;
 
     var navigationItems = actions.getNavigationItems();
-    var menuButtonHtml = ui.menuButton();
-    var navigationHtml = ui.navigation(navigationItems);
-    var templateHtml = ui.index(menuButtonHtml, navigationHtml);
+    var menuButtonUI = ui.menuButton();
+    var navigationUI = ui.navigation(navigationItems);
+    var indexUI = ui.index(menuButtonUI, navigationUI);
 
-    renderers.render(templateHtml);
+    renderers.render(indexUI);
     events.onToggleMenu(renderers.toggleMenu);
   });
 
@@ -2029,9 +2032,9 @@ initialzr.addNode('modules', 'login', function () {
         ui = _module$getNodes.ui,
         renderers = _module$getNodes.renderers;
 
-    var htmlTemplate = ui.index();
+    var indexUI = ui.index();
 
-    renderers.render(htmlTemplate);
+    renderers.render(indexUI);
 
     setTimeout(function () {
       var domModule = ammo.select('[data-module="login"]').get();
@@ -2039,10 +2042,10 @@ initialzr.addNode('modules', 'login', function () {
         return false;
       }
 
-      var titleHtml = ui.title('login');
+      var titleUI = ui.title('login');
 
       if (domModule) {
-        ammo.appendBefore(titleHtml, domModule);
+        renderers.renderTitle(titleUI);
       }
       globalEvents.dispatchViewReady();
     }, 1500);
@@ -2072,7 +2075,7 @@ initialzr.addNode('modules', 'settings', function () {
   module.overwrite('ui').node('index', function () {
     return '\n      <main data-module="settings">\n        <div data-widget="loader" data-show-on="loading"></div>\n      </main>\n    ';
   }).node('title', function (title) {
-    return '\n      <span class="title">' + title.toUpperCase() + '</span>\n    ';
+    return '<span class="title">' + title.toUpperCase() + '</span>';
   });
 
   module.overwrite('actions').node('init', function () {
@@ -2080,19 +2083,20 @@ initialzr.addNode('modules', 'settings', function () {
         ui = _module$getNodes.ui,
         renderers = _module$getNodes.renderers;
 
-    var htmlTemplate = ui.index();
+    var indexUI = ui.index();
 
-    renderers.render(htmlTemplate);
+    renderers.render(indexUI);
+
     setTimeout(function () {
       var domModule = ammo.select('[data-module="settings"]').get();
       if (!domModule) {
         return false;
       }
 
-      var titleHtml = ui.title('settings');
+      var titleUI = ui.title('login');
 
       if (domModule) {
-        ammo.appendBefore(titleHtml, domModule);
+        renderers.renderTitle(titleUI);
       }
       globalEvents.dispatchViewReady();
     }, 1500);
