@@ -26,10 +26,10 @@ initialzr.addNode('modules', 'header', () => {
     `));
 
   module.overwrite('ui')
-    .node('index', (menuButtonHtml, navigationHtml) => (`
+    .node('index', (menuButtonUI, navigationUI) => (`
       <header data-module="header">
-        ${menuButtonHtml}
-        ${navigationHtml}
+        ${menuButtonUI}
+        ${navigationUI}
       </header>
     `));
 

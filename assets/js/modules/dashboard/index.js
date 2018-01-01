@@ -16,9 +16,7 @@ initialzr.addNode('modules', 'dashboard', () => {
         <div data-widget="loader" data-show-on="loading"></div>
       </main>
     `))
-    .node('title', title => (`
-      <span class="title">${title.toUpperCase()}</span>
-    `));
+    .node('title', title => (`<span class="title">${title.toUpperCase()}</span>`));
 
   module.overwrite('actions')
     .node('init', () => {
