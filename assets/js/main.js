@@ -1875,11 +1875,14 @@ initialzr.addNode('modules', 'dashboard', function () {
 
   var module = initialzr.getNode('modules', 'base')({ name: 'dashboard' });
   var globalEvents = initialzr.getNode('core', 'globalEvents')();
+  var manager = initialzr.getNode('core', 'manager')();
+
+  module.configure('ui').node('title', function (title) {
+    return '<span class="title">' + title.toUpperCase() + '</span>';
+  });
 
   module.overwrite('ui').node('index', function () {
     return '\n      <main data-module="dashboard">\n        <div data-widget="loader" data-show-on="loading"></div>\n      </main>\n    ';
-  }).node('title', function (title) {
-    return '<span class="title">' + title.toUpperCase() + '</span>';
   });
 
   module.overwrite('actions').node('init', function () {
@@ -1890,15 +1893,17 @@ initialzr.addNode('modules', 'dashboard', function () {
     var htmlTemplate = ui.index();
 
     renderers.render(htmlTemplate);
+
+    // simulate loading
     setTimeout(function () {
-      var domModule = ammo.select('[data-module="dashboard"]').get();
-      if (!domModule) {
+      var hasModule = manager.domContainsModule('dashboard');
+      if (!hasModule) {
         return false;
       }
       var titleUI = ui.title('dashboard');
 
-      if (domModule) {
-        ammo.appendBefore(titleUI, domModule);
+      if (hasModule) {
+        renderers.renderTitle(titleUI);
       }
       globalEvents.dispatchViewReady();
     }, 1500);
@@ -1916,11 +1921,13 @@ initialzr.addNode('modules', 'footer', function () {
   var module = initialzr.getNode('modules', 'base')({ name: 'footer' });
   var globalEvents = initialzr.getNode('core', 'globalEvents')();
 
-  module.overwrite('ui').node('navigation', function (items) {
+  module.configure('ui').node('navigation', function (items) {
     return '\n      <nav>\n        <div data-widget="navigation" data-show-on="loading">\n          ' + items.map(function (item) {
       return '\n            <div class="item" data-href="' + item.url + '">' + item.name + '</div>\n          ';
     }).join('') + '\n        </div>\n      </nav>\n    ';
-  }).node('index', function (navigationUI) {
+  });
+
+  module.overwrite('ui').node('index', function (navigationUI) {
     return '<footer data-module="footer">' + navigationUI + '</footer>';
   });
 
@@ -2043,11 +2050,14 @@ initialzr.addNode('modules', 'login', function () {
 
   var module = initialzr.getNode('modules', 'base')({ name: 'login' });
   var globalEvents = initialzr.getNode('core', 'globalEvents')();
+  var manager = initialzr.getNode('core', 'manager')();
+
+  module.configure('ui').node('title', function (title) {
+    return '<span class="title">' + title.toUpperCase() + '</span>';
+  });
 
   module.overwrite('ui').node('index', function () {
     return '\n      <main data-module="login">\n        <div data-widget="loader" data-show-on="loading"></div>\n      </main>\n    ';
-  }).node('title', function (title) {
-    return '<span class="title">' + title.toUpperCase() + '</span>';
   });
 
   module.overwrite('actions').node('init', function () {
@@ -2059,15 +2069,16 @@ initialzr.addNode('modules', 'login', function () {
 
     renderers.render(indexUI);
 
+    // simulate loading
     setTimeout(function () {
-      var domModule = ammo.select('[data-module="login"]').get();
-      if (!domModule) {
+      var hasModule = manager.domContainsModule('login');
+      if (!hasModule) {
         return false;
       }
 
       var titleUI = ui.title('login');
 
-      if (domModule) {
+      if (hasModule) {
         renderers.renderTitle(titleUI);
       }
       globalEvents.dispatchViewReady();
@@ -2093,12 +2104,15 @@ initialzr.addNode('modules', 'settings', function () {
 
   var base = initialzr.getNode('modules', 'base')({ name: 'settings' });
   var module = ammo.app(props, store).schema('module').inherit(base);
+  var manager = initialzr.getNode('core', 'manager')();
   var globalEvents = initialzr.getNode('core', 'globalEvents')();
+
+  module.configure('ui').node('title', function (title) {
+    return '<span class="title">' + title.toUpperCase() + '</span>';
+  });
 
   module.overwrite('ui').node('index', function () {
     return '\n      <main data-module="settings">\n        <div data-widget="loader" data-show-on="loading"></div>\n      </main>\n    ';
-  }).node('title', function (title) {
-    return '<span class="title">' + title.toUpperCase() + '</span>';
   });
 
   module.overwrite('actions').node('init', function () {
@@ -2110,15 +2124,16 @@ initialzr.addNode('modules', 'settings', function () {
 
     renderers.render(indexUI);
 
+    // simulate loading
     setTimeout(function () {
-      var domModule = ammo.select('[data-module="settings"]').get();
-      if (!domModule) {
+      var hasModule = manager.domContainsModule('settings');
+      if (!hasModule) {
         return false;
       }
 
       var titleUI = ui.title('login');
 
-      if (domModule) {
+      if (hasModule) {
         renderers.renderTitle(titleUI);
       }
       globalEvents.dispatchViewReady();

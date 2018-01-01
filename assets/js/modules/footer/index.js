@@ -6,7 +6,7 @@ initialzr.addNode('modules', 'footer', () => {
   const module = initialzr.getNode('modules', 'base')({ name: 'footer' });
   const globalEvents = initialzr.getNode('core', 'globalEvents')();
 
-  module.overwrite('ui')
+  module.configure('ui')
     .node('navigation', items => (`
       <nav>
         <div data-widget="navigation" data-show-on="loading">
@@ -15,7 +15,9 @@ initialzr.addNode('modules', 'footer', () => {
           `)).join('')}
         </div>
       </nav>
-    `))
+    `));
+
+  module.overwrite('ui')
     .node('index', navigationUI => (`<footer data-module="footer">${navigationUI}</footer>`));
 
   module.overwrite('actions')

@@ -45,3 +45,10 @@ The app comes with a number of build tools to automate common development tasks,
 - `gulp module --option {appName} --option {moduleName}` - utility for creating modules in the app's context. Replace {appName} with your app name and {moduleName} with your module name. The new module's files will reside in appDir/assets/js/modules/{moduleName}/ and appDir/assets/sass/modules/{moduleName}
 
 - `gulp widget --option {appName} --option {widgetName}` - utility for creating widgets in the app's context. Replace {appName} with your app name and {widgetName} with your widget name. The new widgets's files will reside in appDir/assets/js/widgets/{widgetName}/ and appDir/assets/sass/widgets/{widgetName}
+
+### Libraries
+
+This application comes packed with two javascript libraries:
+
+ - `ammo` - provides general-purpose utility belt for building front-end applications
+ - `router` - provides a light-weight hash-based router, utilizing the window.location API

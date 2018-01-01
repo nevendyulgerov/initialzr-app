@@ -9,14 +9,17 @@ initialzr.addNode('modules', 'login', () => {
 
   const module = initialzr.getNode('modules', 'base')({ name: 'login' });
   const globalEvents = initialzr.getNode('core', 'globalEvents')();
+  const manager = initialzr.getNode('core', 'manager')();
+
+  module.configure('ui')
+    .node('title', title => (`<span class="title">${title.toUpperCase()}</span>`));
 
   module.overwrite('ui')
     .node('index', () => (`
       <main data-module="login">
         <div data-widget="loader" data-show-on="loading"></div>
       </main>
-    `))
-    .node('title', title => (`<span class="title">${title.toUpperCase()}</span>`));
+    `));
 
   module.overwrite('actions')
     .node('init', () => {
@@ -25,15 +28,16 @@ initialzr.addNode('modules', 'login', () => {
 
       renderers.render(indexUI);
 
+      // simulate loading
       setTimeout(() => {
-        const domModule = ammo.select('[data-module="login"]').get();
-        if (!domModule) {
+        const hasModule = manager.domContainsModule('login');
+        if (!hasModule) {
           return false;
         }
 
         const titleUI = ui.title('login');
 
-        if (domModule) {
+        if (hasModule) {
           renderers.renderTitle(titleUI);
         }
         globalEvents.dispatchViewReady();

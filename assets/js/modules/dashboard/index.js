@@ -9,14 +9,17 @@ initialzr.addNode('modules', 'dashboard', () => {
 
   const module = initialzr.getNode('modules', 'base')({ name: 'dashboard' });
   const globalEvents = initialzr.getNode('core', 'globalEvents')();
+  const manager = initialzr.getNode('core', 'manager')();
+
+  module.configure('ui')
+    .node('title', title => (`<span class="title">${title.toUpperCase()}</span>`));
 
   module.overwrite('ui')
     .node('index', () => (`
       <main data-module="dashboard">
         <div data-widget="loader" data-show-on="loading"></div>
       </main>
-    `))
-    .node('title', title => (`<span class="title">${title.toUpperCase()}</span>`));
+    `));
 
   module.overwrite('actions')
     .node('init', () => {
@@ -24,15 +27,17 @@ initialzr.addNode('modules', 'dashboard', () => {
       const htmlTemplate = ui.index();
 
       renderers.render(htmlTemplate);
+
+      // simulate loading
       setTimeout(() => {
-        const domModule = ammo.select('[data-module="dashboard"]').get();
-        if (!domModule) {
+        const hasModule = manager.domContainsModule('dashboard');
+        if (!hasModule) {
           return false;
         }
         const titleUI = ui.title('dashboard');
 
-        if (domModule) {
-          ammo.appendBefore(titleUI, domModule);
+        if (hasModule) {
+          renderers.renderTitle(titleUI);
         }
         globalEvents.dispatchViewReady();
       }, 1500);
