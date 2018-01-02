@@ -26,10 +26,12 @@ Gulp and npm are used for creating the build tools.
 
 The app comes with a number of build tools to automate common development tasks, including:
 
-- npm run build - primary build task - watches all relevant sass and js files and preprocess all sass files to style.css and all js files to main.js upon change
+- `npm run server` - runs the local web development server at `http://localhost:8080`
 
-- npm run dist - creates a distributable, optimized package in appDir/dist
+- `npm run build` - primary build task - watches all relevant sass and js files and preprocess all sass files to style.css and all js files to main.js upon change
 
-- gulp module --option {appName} --option {moduleName} - utility for creating modules in the app's context. The new module's files will reside in appDir/assets/js/modules/{moduleName}/ and appDir/assets/sass/modules/{moduleName}
+- `npm run dist` - creates a distributable, optimized package in appDir/dist
 
-- gulp widget --option {appName} --option {widgetName} - utility for creating widgets in the app's context. The new widgets's files will reside in appDir/assets/js/widgets/{widgetName}/ and appDir/assets/sass/widgets/{widgetName}
+- `gulp module --option {appName} --option {moduleName}` - utility for creating modules in the app's context. The new module's files will reside in appDir/assets/js/modules/{moduleName}/ and appDir/assets/sass/modules/{moduleName}
+
+- `gulp widget --option {appName} --option {widgetName}` - utility for creating widgets in the app's context. The new widgets's files will reside in appDir/assets/js/widgets/{widgetName}/ and appDir/assets/sass/widgets/{widgetName}
