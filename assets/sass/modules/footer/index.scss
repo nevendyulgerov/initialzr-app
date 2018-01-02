@@ -46,10 +46,10 @@
             content: '';
             display: block;
             position: absolute;
-            top: 0;
+            top: -1px;
             right: -15px;
             width: 1px;
-            height: 100%;
+            height: calc(100% + 2px);
             background-color: $jewel;
           }
 

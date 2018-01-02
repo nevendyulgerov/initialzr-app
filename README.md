@@ -1,30 +1,14 @@
 # Initialzr App
 
-Base for custom, event-driven, single-page applications, created with the Ammo API.
-
-## Requirements
-* npm
-* [http-server](https://www.npmjs.com/package/http-server)
-
-## How to Run:
-
-1. [Download](https://github.com/nevendyulgerov/initialzr-app/archive/master.zip) or [Clone](https://github.com/nevendyulgerov/initialzr-app.git) the Repository.
-2. Install globally http-server: ` npm install http-server -g`
-3. Run `npm install` to install the project dependencies.
-4. Run the app's server using `npm run server`. App will become available at: `localhost:8080`.
-5. Run the app's main build task `npm run build`.
+Base for custom event-driven single-page applications, created with the Ammo API.
 
 ## Notes
 
 ### Architecture
 
-This is a scaffolding app, which can be used as a base for event-driven, single-page applications. This app utilizes a declarative, functional design, a custom router and the Ammo API.
+This is a scaffolding app, which can be used as a base for event-driven single-page applications. This app utilizes a declarative, functional design, a custom router and the Ammo API.
 
-Initialzr-app encapsulates all of its functionality in a single global space. A global container so to speak. The definition of this global app container can be found in appDir/assets/js/app/index.js. By default this is `initialzr`. The definitions of all core-related functionality can be found in appDir/assets/js/core. The definitions of all module and widget scripts can be found in appDir/assets/js/modules and appDir/assets/js/widgets respectively.
-
-When initialized, initialzr-app exposes a single global space, accessible from window[{appName}], where {appName} is the name of your global app container. By default this is `initialzr`. You can take a closer look at the methods available under window[{appName}]. You will be mostly interested in the .getNode() and .getNodes() methods. Through .getNode() and .getNodes() you can retrieve various app functionality.
-
-Initialzr-app comes pre-configured to handle scss pre-processing and js concatenation. These two methods are uses to create a single stylesheet and a single javascript file, served to index.html - the app's entrypoint. The single unified stylesheet contains all style definitions from appDir/assets/sass. The single unified javascript file contains all script definitions from appDir/assets/js.
+The app comes preconfigured to handle scss preprocessing and js concatenation. These two methods are uses to create a single stylesheet and a single javascript file, served to index.html - the app's entrypoint. The single unified stylesheet contains all style definitions from appDir/assets/sass. The single unified javascript file contains all script definitions from appDir/assets/js.
 
 This app uses an architecture, in which a module's files (script and style) are separated by type. Scripts reside in appDir/assets/js. Styles reside in appDir/assets/sass.
 
@@ -42,17 +26,10 @@ Gulp and npm are used for creating the build tools.
 
 The app comes with a number of build tools to automate common development tasks, including:
 
-- `npm run server` - creates a local development server, by utilizing npm's module 'http-server'
+- npm run build - primary build task - watches all relevant sass and js files and preprocess all sass files to style.css and all js files to main.js upon change
 
-- `npm run build` - primary build task - watches all relevant sass and js files and preprocess all sass files to style.css and all js files to main.js upon change
+- npm run dist - creates a distributable, optimized package in appDir/dist
 
-- `gulp module --option {appName} --option {moduleName}` - utility for creating modules in the app's context. Replace {appName} with your app name and {moduleName} with your module name. The new module's files will reside in appDir/assets/js/modules/{moduleName}/ and appDir/assets/sass/modules/{moduleName}
+- gulp module --option {appName} --option {moduleName} - utility for creating modules in the app's context. The new module's files will reside in appDir/assets/js/modules/{moduleName}/ and appDir/assets/sass/modules/{moduleName}
 
-- `gulp widget --option {appName} --option {widgetName}` - utility for creating widgets in the app's context. Replace {appName} with your app name and {widgetName} with your widget name. The new widgets's files will reside in appDir/assets/js/widgets/{widgetName}/ and appDir/assets/sass/widgets/{widgetName}
-
-### Libraries
-
-This application comes packed with two javascript libraries:
-
- - `ammo` - provides general-purpose utility belt for building front-end applications. This is a base lib (base libs can be used by other libs). It resides in appDir/assets/js/libs/_base/ammo
- - `router` - provides a light-weight, hash-based router via the window.location API. This lib resides in appDir/assets/js/libs
+- gulp widget --option {appName} --option {widgetName} - utility for creating widgets in the app's context. The new widgets's files will reside in appDir/assets/js/widgets/{widgetName}/ and appDir/assets/sass/widgets/{widgetName}

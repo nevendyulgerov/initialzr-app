@@ -1,4 +1,4 @@
-/* globals initialzr, ammo */
+/* globals initialzr */
 
 /**
  * Module: Dashboard
@@ -35,10 +35,8 @@ initialzr.addNode('modules', 'dashboard', () => {
           return false;
         }
         const titleUI = ui.title('dashboard');
+        renderers.renderTitle(titleUI);
 
-        if (hasModule) {
-          renderers.renderTitle(titleUI);
-        }
         globalEvents.dispatchViewReady();
       }, 1500);
     });

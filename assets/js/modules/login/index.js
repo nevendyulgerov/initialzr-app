@@ -36,10 +36,8 @@ initialzr.addNode('modules', 'login', () => {
         }
 
         const titleUI = ui.title('login');
+        renderers.renderTitle(titleUI);
 
-        if (hasModule) {
-          renderers.renderTitle(titleUI);
-        }
         globalEvents.dispatchViewReady();
       }, 1500);
     });
