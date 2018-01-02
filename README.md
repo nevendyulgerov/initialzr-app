@@ -30,7 +30,7 @@ The app comes with a number of build tools to automate common development tasks,
 
 - `npm run build` - primary build task - watches all relevant sass and js files and preprocess all sass files to style.css and all js files to main.js upon change
 
-- `npm run dist` - creates a distributable, optimized package in appDir/dist
+- `npm run dist` - creates a distributable package with minified resources (css/js) in appDir/dist
 
 - `gulp module --option {appName} --option {moduleName}` - utility for creating modules in the app's context. The new module's files will reside in appDir/assets/js/modules/{moduleName}/ and appDir/assets/sass/modules/{moduleName}
 
