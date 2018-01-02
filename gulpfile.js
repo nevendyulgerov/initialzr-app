@@ -15,7 +15,9 @@ const sequence = require('run-sequence');
 const bulkSass = require('gulp-sass-bulk-import');
 const buildTools = require('./build/build');
 const rename = require('gulp-rename');
+const trimLines = require('gulp-trimlines');
 
+// define js paths
 const jsPaths = [
   './assets/js/libs/**/*',
   './assets/js/app/**/*',
@@ -24,6 +26,7 @@ const jsPaths = [
   './assets/js/widgets/**/*'
 ];
 
+// define sass paths
 const sassPaths = [
   './assets/sass/app/*',
   './assets/sass/core/*',
@@ -72,25 +75,11 @@ gulp.task('sass:preprocess', () => {
 gulp.task('js:concat', () => {
   'use strict';
   return gulp.src(jsPaths)
+    .pipe(trimLines())
     .pipe(sourcemaps.init())
-    .pipe(babel({
-      presets: ['es2015']
-    }))
+    .pipe(babel({ presets: ['es2015'] }))
     .pipe(concat('main.js', {
       newLine: '\n;'
-    }))
-    .pipe(gulp.dest('./assets/js/'));
-});
-
-// minify js file
-gulp.task('js:minify', () => {
-  'use strict';
-  gulp.src('./assets/js/main.js')
-    .pipe(minify({
-      ext: {
-        src: '.js',
-        min: '.min.js'
-      }
     }))
     .pipe(gulp.dest('./assets/js/'));
 });
@@ -142,10 +131,8 @@ gulp.task('dist:js', () => {
 
   gulp.src('./assets/js/main.js')
     .pipe(minify({
-      ext: {
-        src: '.js',
-        min: '.min.js'
-      }
+      ext: { min: '.min.js' },
+      noSource: true
     }))
     .pipe(gulp.dest('./dist/assets/js/'));
 });
@@ -156,9 +143,7 @@ gulp.task('dist:sass', () => {
 
   return gulp.src('./assets/sass/style.scss')
     .pipe(bulkSass())
-    .pipe(sass(
-      {outputStyle: 'compressed'}
-    ).on('error', sass.logError))
+    .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
     .pipe(autoprefixer({
       browsers: ['last 5 versions'],
       cascade: false
@@ -182,7 +167,6 @@ gulp.task('dist:fonts', () => {
   gulp.src('./assets/fonts/**/*.{otf,eot,svg,ttf,woff,woff2}', { base: '.' })
     .pipe(gulp.dest('./dist/'));
 });
-
 
 // distribute html
 gulp.task('dist:html', () => {
