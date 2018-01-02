@@ -18,10 +18,7 @@ initialzr.addNode('widgets', 'loader', (domWidget, props) => {
     `));
 
   widget.configure('renderers')
-    .node('render', widgetHtml => {
-      domWidget.innerHTML = widgetHtml;
-      domWidget.classList.add('active');
-    })
+    .node('render', widgetHtml => domWidget.innerHTML = widgetHtml)
     .node('show', () => domWidget.classList.add('active'))
     .node('hide', () => domWidget.classList.contains('active') && domWidget.classList.remove('active'));
 
@@ -31,6 +28,7 @@ initialzr.addNode('widgets', 'loader', (domWidget, props) => {
       const indexUI = ui.index();
 
       renderers.render(indexUI);
+      renderers.show();
 
       globalEvents
         .dispatchWidgetReady(props.widget)

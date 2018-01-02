@@ -3,8 +3,8 @@
 /* globals ammo */
 
 /**
- * Lib: Router
- */
+* Lib: Router
+*/
 
 (function (base) {
   'use strict';
@@ -219,42 +219,42 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
   "use strict";
 
   /**
-   * Library: Ammo
-   * Author: Neven Dyulgerov
-   * v1.3.5
-   *
-   * Provides general purpose utility belt for building web applications with JS
-   * Ammo is available as global variable {ammo}
-   * Released under the MIT license
-   */
+  * Library: Ammo
+  * Author: Neven Dyulgerov
+  * v1.3.5
+  *
+  * Provides general purpose utility belt for building web applications with JS
+  * Ammo is available as global variable {ammo}
+  * Released under the MIT license
+  */
 
   base.ammo = function () {
     var _this = this;
 
     /**
-     * @description Provide DOM context
-     * Contx
-     * @param context
-     * @returns {*|HTMLDocument}
-     */
+    * @description Provide DOM context
+    * Contx
+    * @param context
+    * @returns {*|HTMLDocument}
+    */
     var contx = function contx(context) {
       return context || base.document;
     };
 
     /**
-     * @description Event handler for DOM Ready
-     * @param callback
-     */
+    * @description Event handler for DOM Ready
+    * @param callback
+    */
     var onDomReady = function onDomReady(callback) {
       base.document.addEventListener('DOMContentLoaded', callback);
     };
 
     /**
-     * @description Event handler for hover
-     * @param domEls
-     * @param onIn
-     * @param onOut
-     */
+    * @description Event handler for hover
+    * @param domEls
+    * @param onIn
+    * @param onOut
+    */
     var onHover = function onHover(domEls, onIn, onOut) {
       var lastHovered = void 0;
       _each(domEls, function (el) {
@@ -269,12 +269,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     /**
-     * @description Delegate event to given selector with className
-     * @param event
-     * @param className
-     * @param callback
-     * @param context
-     */
+    * @description Delegate event to given selector with className
+    * @param event
+    * @param className
+    * @param callback
+    * @param context
+    */
     var delegateEvent = function delegateEvent(event, className, callback, context) {
       var classNames = className.indexOf('.') > -1 ? className.split('.') : [className];
       classNames = classNames.filter(function (item) {
@@ -300,41 +300,41 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     /**
-     * @description Get node by given selector
-     * @param selector
-     * @param context
-     * @returns {Node}
-     */
+    * @description Get node by given selector
+    * @param selector
+    * @param context
+    * @returns {Node}
+    */
     var getEl = function getEl(selector, context) {
       return contx(context).querySelector(selector);
     };
 
     /**
-     * @description Get node list by given selector
-     * @param selector
-     * @param context
-     */
+    * @description Get node list by given selector
+    * @param selector
+    * @param context
+    */
     var getEls = function getEls(selector, context) {
       return contx(context).querySelectorAll(selector);
     };
 
     /**
-     * @description Check if element is hovered
-     * @param selector
-     * @returns {boolean}
-     */
+    * @description Check if element is hovered
+    * @param selector
+    * @returns {boolean}
+    */
     var isHovered = function isHovered(selector) {
       var domEl = getEl(selector);
       return domEl.parentNode.querySelector(':hover') === domEl;
     };
 
     /**
-     * Public
-     * Filter Class
-     * @param className
-     * @param els
-     * @returns {Array}
-     */
+    * Public
+    * Filter Class
+    * @param className
+    * @param els
+    * @returns {Array}
+    */
     var filterClass = function filterClass(className, els) {
       var filtered = [];
       _each(els, function (el) {
@@ -346,75 +346,75 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     /**
-     * @description Append HTML content after the end of a node
-     * @param html
-     * @param context
-     * @returns {*}
-     */
+    * @description Append HTML content after the end of a node
+    * @param html
+    * @param context
+    * @returns {*}
+    */
     var appendAfter = function appendAfter(html, context) {
       contx(context).insertAdjacentHTML('afterend', html.toString());
       return _this;
     };
 
     /**
-     * @description Append HTML content before the end of a node
-     * @param html
-     * @param context
-     * @returns {*}
-     */
+    * @description Append HTML content before the end of a node
+    * @param html
+    * @param context
+    * @returns {*}
+    */
     var appendBefore = function appendBefore(html, context) {
       contx(context).insertAdjacentHTML('beforeend', html.toString());
       return _this;
     };
 
     /**
-     * @description Prepend HTML content after the beginning of a node
-     * @param html
-     * @param context
-     * @returns {*}
-     */
+    * @description Prepend HTML content after the beginning of a node
+    * @param html
+    * @param context
+    * @returns {*}
+    */
     var prependAfter = function prependAfter(html, context) {
       contx(context).insertAdjacentHTML('afterbegin', html.toString());
       return _this;
     };
 
     /**
-     * @description Prepend HTML content before the beginning of a node
-     * @param html
-     * @param context
-     */
+    * @description Prepend HTML content before the beginning of a node
+    * @param html
+    * @param context
+    */
     var prependBefore = function prependBefore(html, context) {
       contx(context).insertAdjacentHTML('beforebegin', html.toString());
       return _this;
     };
 
     /**
-     * @description Remove node from the DOM
-     * @param domEl
-     */
+    * @description Remove node from the DOM
+    * @param domEl
+    */
     var removeEl = function removeEl(domEl) {
       domEl.parentNode.removeChild(domEl);
       return _this;
     };
 
     /**
-     * Public
-     * Remove
-     * @param el
-     * @param parent
-     * @returns {*}
-     */
+    * Public
+    * Remove
+    * @param el
+    * @param parent
+    * @returns {*}
+    */
     var remove = function remove(el, parent) {
       (parent || el.parentNode).removeChild(el);
       return base.ammo;
     };
 
     /**
-     * Public
-     * Each
-     * @param elements
-     * @param callback
-     */
+    * Public
+    * Each
+    * @param elements
+    * @param callback
+    */
     var _each = function _each(elements, callback) {
       Object.keys(elements).forEach(function (k, i) {
         callback(elements[k], i);
@@ -422,130 +422,130 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     /**
-     * Public
-     * JSON Copy
-     * @param obj
-     */
+    * Public
+    * JSON Copy
+    * @param obj
+    */
     var jsonCopy = function jsonCopy(obj) {
       return JSON.parse(JSON.stringify(obj));
     };
 
     /**
-     * @description Check if value is of type 'object'
-     * @param val
-     * @returns {boolean}
-     */
+    * @description Check if value is of type 'object'
+    * @param val
+    * @returns {boolean}
+    */
     var isObj = function isObj(val) {
       return (typeof val === 'undefined' ? 'undefined' : _typeof(val)) === 'object' && !isArr(val) && !isNull(val);
     };
 
     /**
-     * @description Check if value is of type 'null'
-     * @param val
-     * @returns {boolean}
-     */
+    * @description Check if value is of type 'null'
+    * @param val
+    * @returns {boolean}
+    */
     var isNull = function isNull(val) {
       return val === null;
     };
 
     /**
-     * @description Check if value is of type 'number'
-     * @param val
-     * @returns {boolean}
-     */
+    * @description Check if value is of type 'number'
+    * @param val
+    * @returns {boolean}
+    */
     var isNum = function isNum(val) {
       return typeof val === 'number' && !isNaN(val);
     };
 
     /**
-     * @description Check if value is of type 'function'
-     * @param val
-     * @returns {boolean}
-     */
+    * @description Check if value is of type 'function'
+    * @param val
+    * @returns {boolean}
+    */
     var isFunc = function isFunc(val) {
       return typeof val === 'function';
     };
 
     /**
-     * @description Check if value is of type 'array'
-     * @param val
-     * @returns {boolean}
-     */
+    * @description Check if value is of type 'array'
+    * @param val
+    * @returns {boolean}
+    */
     var isArr = function isArr(val) {
       return Array.isArray(val);
     };
 
     /**
-     * @description Check if value is of type 'string'
-     * @param val
-     * @returns {boolean}
-     */
+    * @description Check if value is of type 'string'
+    * @param val
+    * @returns {boolean}
+    */
     var isStr = function isStr(val) {
       return typeof val === 'string';
     };
 
     /**
-     * @description Check if value is of type 'undefined'
-     * @param val
-     * @returns {boolean}
-     */
+    * @description Check if value is of type 'undefined'
+    * @param val
+    * @returns {boolean}
+    */
     var isUndef = function isUndef(val) {
       return typeof val === 'undefined';
     };
 
     /**
-     * @description Check if value is of type 'boolean'
-     * @param val
-     * @returns {boolean}
-     */
+    * @description Check if value is of type 'boolean'
+    * @param val
+    * @returns {boolean}
+    */
     var isBool = function isBool(val) {
       return typeof val === 'boolean';
     };
 
     /**
-     * @description Check if object has property
-     * @param obj
-     * @param prop
-     * @returns {boolean}
-     */
+    * @description Check if object has property
+    * @param obj
+    * @param prop
+    * @returns {boolean}
+    */
     var hasProp = function hasProp(obj, prop) {
       return obj.hasOwnProperty(prop);
     };
 
     /**
-     * @description Check if object has method
-     * @param obj
-     * @param method
-     * @returns {boolean}
-     */
+    * @description Check if object has method
+    * @param obj
+    * @param method
+    * @returns {boolean}
+    */
     var hasMethod = function hasMethod(obj, method) {
       return hasProp(obj, method) && isFunc(obj[method]);
     };
 
     /**
-     * @description Check if object has key
-     * @param obj
-     * @param key
-     * @returns {boolean}
-     */
+    * @description Check if object has key
+    * @param obj
+    * @param key
+    * @returns {boolean}
+    */
     var hasKey = function hasKey(obj, key) {
       return getKeys(obj).indexOf(key) > -1;
     };
 
     /**
-     * @description Get object keys
-     * @param obj
-     * @returns {Array}
-     */
+    * @description Get object keys
+    * @param obj
+    * @returns {Array}
+    */
     var getKeys = function getKeys(obj) {
       return Object.keys(obj);
     };
 
     /**
-     * @description Iterate over each key of an object
-     * @param obj
-     * @param callback
-     */
+    * @description Iterate over each key of an object
+    * @param obj
+    * @param callback
+    */
     var eachKey = function eachKey(obj, callback) {
       Object.keys(obj).forEach(function (k, i) {
         return callback(obj[k], k, i);
@@ -553,11 +553,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     /**
-     * @description Filter array of items
-     * @param items
-     * @param key
-     * @param value
-     */
+    * @description Filter array of items
+    * @param items
+    * @param key
+    * @param value
+    */
     var filter = function filter(items, key, value) {
       var filtered = [];
       items.filter(function (item, index) {
@@ -569,21 +569,21 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     /**
-     * @description Get url param
-     * @param name
-     * @returns {Array|{index: number, input: string}|*|string}
-     */
+    * @description Get url param
+    * @param name
+    * @returns {Array|{index: number, input: string}|*|string}
+    */
     var getUrlParam = function getUrlParam(name) {
       var match = new RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
       return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
     };
 
     /**
-     * @description Get random integer between two numbers
-     * @param min
-     * @param max
-     * @returns {*}
-     */
+    * @description Get random integer between two numbers
+    * @param min
+    * @param max
+    * @returns {*}
+    */
     var randomInclusive = function randomInclusive(min, max) {
       min = Math.ceil(min);
       max = Math.floor(max);
@@ -591,12 +591,12 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     /**
-     * @description Iterate recursively
-     * @param handler
-     * @param complete
-     * @param index
-     * @returns {*}
-     */
+    * @description Iterate recursively
+    * @param handler
+    * @param complete
+    * @param index
+    * @returns {*}
+    */
     var recurIter = function recurIter(handler, complete, index) {
       index = index || 0;
       handler(index, function (canRecur) {
@@ -608,11 +608,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     /**
-     * @description Poll over an interval of time
-     * @param handler
-     * @param complete
-     * @param interval
-     */
+    * @description Poll over an interval of time
+    * @param handler
+    * @param complete
+    * @param interval
+    */
     var poll = function poll(handler, complete, interval) {
       setTimeout(function () {
         handler(function (canPoll) {
@@ -625,9 +625,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     /**
-     * @description Buffer high-frequency events
-     * @returns {function}
-     */
+    * @description Buffer high-frequency events
+    * @returns {function}
+    */
     var buffer = function buffer() {
       var timers = {};
       return function (id, ms, clb) {
@@ -642,9 +642,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     /**
-     * @description Augment object with properties from other objects
-     * @returns {object}
-     */
+    * @description Augment object with properties from other objects
+    * @returns {object}
+    */
     var extend = function extend() {
       var obj = arguments[0];
       var enhancedObj = Object.assign(obj, {});
@@ -661,10 +661,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     /**
-     * @description Convert variable value by type
-     * @param val
-     * @returns {*}
-     */
+    * @description Convert variable value by type
+    * @param val
+    * @returns {*}
+    */
     var convertByType = function convertByType(val) {
       if (!isStr(val)) {
         return undefined;
@@ -684,11 +684,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     /**
-     * @description Compile HTML strings to DOM nodes
-     * @param html
-     * @param items
-     * @returns {object}
-     */
+    * @description Compile HTML strings to DOM nodes
+    * @param html
+    * @param items
+    * @returns {object}
+    */
     var template = function template(html, items) {
       var compiled = void 0;
       var observerTag = {
@@ -841,9 +841,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     /**
-     * @description AJAX API based on XMLHttpRequest
-     * @param options
-     */
+    * @description AJAX API based on XMLHttpRequest
+    * @param options
+    */
     var request = function request(options) {
       var xhr = new XMLHttpRequest();
       xhr.onreadystatechange = function () {
@@ -870,10 +870,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     /**
-     * @description Local storage API
-     * @param key
-     * @returns {*}
-     */
+    * @description Local storage API
+    * @param key
+    * @returns {*}
+    */
     var store = function store(key) {
       var storage = void 0;
       if (!isStr(key)) {
@@ -947,9 +947,9 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     /**
-     * @description Create sequential execution for async functions
-     * @returns {{chain: chain, execute: execute}}
-     */
+    * @description Create sequential execution for async functions
+    * @returns {{chain: chain, execute: execute}}
+    */
     var sequence = function sequence() {
       var chained = [];
       var value = void 0;
@@ -992,10 +992,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     /**
-     * @description Determine type checker
-     * @param type
-     * @returns {*}
-     */
+    * @description Determine type checker
+    * @param type
+    * @returns {*}
+    */
     var determineTypeChecker = function determineTypeChecker(type) {
       switch (type) {
         case 'number':
@@ -1020,10 +1020,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     /**
-     * @description Set strong typed object
-     * @param config
-     * @returns {*}
-     */
+    * @description Set strong typed object
+    * @param config
+    * @returns {*}
+    */
     var setStrongTypedObject = function setStrongTypedObject(config) {
       var proxy = {};
       eachKey(config, function (obj, key) {
@@ -1049,11 +1049,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     /**
-     * @description Create encapsulated, augmentative, object-based application
-     * @param {object} props
-     * @param {object} store
-     * @returns {Error}
-     */
+    * @description Create encapsulated, augmentative, object-based application
+    * @param {object} props
+    * @param {object} store
+    * @returns {Error}
+    */
     var app = function app(props, store) {
       var hasStore = isObj(store);
       var hasProps = isObj(props);
@@ -1280,46 +1280,46 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     /**
-     * @description Set style property for given node
-     * @param selection
-     * @param index
-     * @param prop
-     * @param value
-     */
+    * @description Set style property for given node
+    * @param selection
+    * @param index
+    * @param prop
+    * @param value
+    */
     var _style = function _style(selection, prop, value, index) {
       selection.style.setProperty(prop, isFunc(value) ? value(selection, index) || selection.style.getProperty(prop) : value, '');
     };
 
     /**
-     * @description Set attribute property for given node
-     * @param selection
-     * @param prop
-     * @param value
-     * @param index
-     */
+    * @description Set attribute property for given node
+    * @param selection
+    * @param prop
+    * @param value
+    * @param index
+    */
     var _attr = function _attr(selection, prop, value, index) {
       var currValue = selection.getAttribute(prop);
       selection.setAttribute(prop, isFunc(value) ? value(selection, currValue, index) || currValue : value);
     };
 
     /**
-     * @description Set innerHTML for given node
-     * @param selection
-     * @param value
-     * @param index
-     */
+    * @description Set innerHTML for given node
+    * @param selection
+    * @param value
+    * @param index
+    */
     var elText = function elText(selection, value, index) {
       selection.innerHTML = isFunc(value) ? value(selection.innerHTML, index) || selection.innerHTML : value;
     };
 
     /**
-     * @description Filter nodes
-     * @param selection
-     * @param value
-     * @param selector
-     * @param index
-     * @returns {*}
-     */
+    * @description Filter nodes
+    * @param selection
+    * @param value
+    * @param selector
+    * @param index
+    * @returns {*}
+    */
     var filterNodes = function filterNodes(selection, value, selector, index) {
       if (isFunc(value)) {
         return value(selection, index);
@@ -1341,11 +1341,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     /**
-     * @description DOM manipulation API for single node
-     * @param selector
-     * @param context
-     * @returns {object}
-     */
+    * @description DOM manipulation API for single node
+    * @param selector
+    * @param context
+    * @returns {object}
+    */
     var select = function select(selector, context) {
       var selection = isStr(selector) ? getEl(selector, context) : selector;
       return {
@@ -1381,11 +1381,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     /**
-     * @description DOM manipulation API for node lists
-     * @param selector
-     * @param context
-     * @returns {object}
-     */
+    * @description DOM manipulation API for node lists
+    * @param selector
+    * @param context
+    * @returns {object}
+    */
     var selectAll = function selectAll(selector, context) {
       var selection = isStr(selector) ? getEls(selector, context) : selector;
       var filtered = void 0;
@@ -1482,8 +1482,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     };
 
     /**
-     * Public API
-     */
+    * Public API
+    */
     return {
       onDomReady: onDomReady,
       onHover: onHover,
@@ -1537,8 +1537,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 /* globals ammo */
 
 /**
- * App entrypoint
- */
+* App entrypoint
+*/
 
 (function () {
   'use strict';
@@ -1571,8 +1571,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 /* globals initialzr */
 
 /**
- * Core: Global Events
- */
+* Core: Global Events
+*/
 
 initialzr.addNode('core', 'globalEvents', function () {
   'use strict';
@@ -1587,11 +1587,11 @@ initialzr.addNode('core', 'globalEvents', function () {
   var WIDGET_CHANGE = 'WIDGET_CHANGE';
 
   /**
-   * @description Dispatch event
-   * @param type
-   * @param options
-   * @returns {*}
-   */
+  * @description Dispatch event
+  * @param type
+  * @param options
+  * @returns {*}
+  */
   var dispatchEvent = function dispatchEvent(type) {
     var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
@@ -1614,11 +1614,11 @@ initialzr.addNode('core', 'globalEvents', function () {
   };
 
   /**
-   * @description Intercept event
-   * @param type
-   * @param options
-   * @returns {*}
-   */
+  * @description Intercept event
+  * @param type
+  * @param options
+  * @returns {*}
+  */
   var interceptEvent = function interceptEvent(type) {
     var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
@@ -1696,8 +1696,8 @@ initialzr.addNode('core', 'globalEvents', function () {
 /* globals ammo, initialzr */
 
 /**
- * Core: Router
- */
+* Core: Router
+*/
 
 initialzr.addNode('core', 'manager', function () {
   'use strict';
@@ -1804,8 +1804,8 @@ initialzr.addNode('core', 'manager', function () {
 /* globals initialzr, router */
 
 /**
- * Core: Router
- */
+* Core: Router
+*/
 
 initialzr.addNode('core', 'router', function () {
   'use strict';
@@ -1828,8 +1828,8 @@ initialzr.addNode('core', 'router', function () {
 /* globals initialzr */
 
 /**
- * Core: Version
- */
+* Core: Version
+*/
 
 initialzr.addNode('core', 'version', function () {
   'use strict';
@@ -1844,8 +1844,8 @@ initialzr.addNode('core', 'version', function () {
 /* globals initialzr, ammo */
 
 /**
- * Module: Base
- */
+* Module: Base
+*/
 
 initialzr.addNode('modules', 'base', function (options) {
   'use strict';
@@ -1853,7 +1853,7 @@ initialzr.addNode('modules', 'base', function (options) {
   var module = ammo.app().schema('module');
 
   module.configure('ui').node('index', function () {
-    return '\n      <div data-module="' + options.name + '">\n        <span class="title">Module [' + options.name.toUpperCase() + ']</span>\n      </div>\n    ';
+    return '\n<div data-module="' + options.name + '">\n<span class="title">Module [' + options.name.toUpperCase() + ']</span>\n</div>\n';
   });
 
   module.configure('renderers').node('render', function (ui) {
@@ -1878,11 +1878,11 @@ initialzr.addNode('modules', 'base', function (options) {
 });
 ;'use strict';
 
-/* globals initialzr, ammo */
+/* globals initialzr */
 
 /**
- * Module: Dashboard
- */
+* Module: Dashboard
+*/
 
 initialzr.addNode('modules', 'dashboard', function () {
   'use strict';
@@ -1896,7 +1896,7 @@ initialzr.addNode('modules', 'dashboard', function () {
   });
 
   module.overwrite('ui').node('index', function () {
-    return '\n      <main data-module="dashboard" data-view>\n        <div data-widget="loader" data-show-on="loading"></div>\n      </main>\n    ';
+    return '\n<main data-module="dashboard" data-view>\n<div data-widget="loader" data-show-on="loading"></div>\n</main>\n';
   });
 
   module.overwrite('actions').node('init', function () {
@@ -1915,10 +1915,8 @@ initialzr.addNode('modules', 'dashboard', function () {
         return false;
       }
       var titleUI = ui.title('dashboard');
+      renderers.renderTitle(titleUI);
 
-      if (hasModule) {
-        renderers.renderTitle(titleUI);
-      }
       globalEvents.dispatchViewReady();
     }, 1500);
   });
@@ -1936,9 +1934,9 @@ initialzr.addNode('modules', 'footer', function () {
   var globalEvents = initialzr.getNode('core', 'globalEvents')();
 
   module.configure('ui').node('navigation', function (items) {
-    return '\n      <nav>\n        <div data-widget="navigation" data-show-on="loading">\n          ' + items.map(function (item) {
-      return '\n            <div class="item" data-href="' + item.url + '">' + item.name + '</div>\n          ';
-    }).join('') + '\n        </div>\n      </nav>\n    ';
+    return '\n<nav>\n<div data-widget="navigation" data-show-on="loading">\n' + items.map(function (item) {
+      return '\n<div class="item" data-href="' + item.url + '">' + item.name + '</div>\n';
+    }).join('') + '\n</div>\n</nav>\n';
   });
 
   module.overwrite('ui').node('index', function (navigationUI) {
@@ -1968,8 +1966,8 @@ initialzr.addNode('modules', 'footer', function () {
 /* globals initialzr, ammo */
 
 /**
- * Module: Header
- */
+* Module: Header
+*/
 
 initialzr.addNode('modules', 'header', function () {
   'use strict';
@@ -1977,15 +1975,15 @@ initialzr.addNode('modules', 'header', function () {
   var module = initialzr.getNode('modules', 'base')({ name: 'header' });
 
   module.configure('ui').node('button', function () {
-    return '\n      <button class="trigger toggle-menu">\n        <span class="icon fa fa-bars"></span>\n      </button>\n    ';
+    return '\n<button class="trigger toggle-menu">\n<span class="icon fa fa-bars"></span>\n</button>\n';
   }).node('navigation', function (items) {
-    return '\n      <nav>\n        <div data-widget="navigation" data-show-on="ready">\n          ' + items.map(function (item) {
-      return '\n            <div class="item" data-href="' + item.url + '">' + item.name + '</div>\n          ';
-    }).join('') + '\n        </div>\n      </nav>\n    ';
+    return '\n<nav>\n<div data-widget="navigation" data-show-on="ready">\n' + items.map(function (item) {
+      return '\n<div class="item" data-href="' + item.url + '">' + item.name + '</div>\n';
+    }).join('') + '\n</div>\n</nav>\n';
   });
 
   module.overwrite('ui').node('index', function (buttonUI, navigationUI) {
-    return '\n      <header data-module="header">\n        ' + buttonUI + '\n        ' + navigationUI + '\n      </header>\n    ';
+    return '\n<header data-module="header">\n' + buttonUI + '\n' + navigationUI + '\n</header>\n';
   });
 
   module.configure('events').node('onToggleMenu', function (callback) {
@@ -2056,8 +2054,8 @@ initialzr.addNode('modules', 'header', function () {
 /* globals initialzr, ammo */
 
 /**
- * Module: Login
- */
+* Module: Login
+*/
 
 initialzr.addNode('modules', 'login', function () {
   'use strict';
@@ -2071,7 +2069,7 @@ initialzr.addNode('modules', 'login', function () {
   });
 
   module.overwrite('ui').node('index', function () {
-    return '\n      <main data-module="login" data-view>\n        <div data-widget="loader" data-show-on="loading"></div>\n      </main>\n    ';
+    return '\n<main data-module="login" data-view>\n<div data-widget="loader" data-show-on="loading"></div>\n</main>\n';
   });
 
   module.overwrite('actions').node('init', function () {
@@ -2091,10 +2089,8 @@ initialzr.addNode('modules', 'login', function () {
       }
 
       var titleUI = ui.title('login');
+      renderers.renderTitle(titleUI);
 
-      if (hasModule) {
-        renderers.renderTitle(titleUI);
-      }
       globalEvents.dispatchViewReady();
     }, 1500);
   });
@@ -2126,7 +2122,7 @@ initialzr.addNode('modules', 'settings', function () {
   });
 
   module.overwrite('ui').node('index', function () {
-    return '\n      <main data-module="settings" data-view>\n        <div data-widget="loader" data-show-on="loading"></div>\n      </main>\n    ';
+    return '\n<main data-module="settings" data-view>\n<div data-widget="loader" data-show-on="loading"></div>\n</main>\n';
   });
 
   module.overwrite('actions').node('init', function () {
@@ -2146,10 +2142,8 @@ initialzr.addNode('modules', 'settings', function () {
       }
 
       var titleUI = ui.title('settings');
+      renderers.renderTitle(titleUI);
 
-      if (hasModule) {
-        renderers.renderTitle(titleUI);
-      }
       globalEvents.dispatchViewReady();
     }, 1500);
   });
@@ -2161,8 +2155,8 @@ initialzr.addNode('modules', 'settings', function () {
 /* globals initialzr, ammo */
 
 /**
- * Widget: Loader
- */
+* Widget: Loader
+*/
 
 initialzr.addNode('widgets', 'loader', function (domWidget, props) {
   'use strict';
@@ -2171,12 +2165,11 @@ initialzr.addNode('widgets', 'loader', function (domWidget, props) {
   var globalEvents = initialzr.getNode('core', 'globalEvents')();
 
   widget.configure('ui').node('index', function () {
-    return '\n      <div class="loader-box">\n        <div class="loader"></div>\n      </div>\n    ';
+    return '\n<div class="loader-box">\n<div class="loader"></div>\n</div>\n';
   });
 
   widget.configure('renderers').node('render', function (widgetHtml) {
-    domWidget.innerHTML = widgetHtml;
-    domWidget.classList.add('active');
+    return domWidget.innerHTML = widgetHtml;
   }).node('show', function () {
     return domWidget.classList.add('active');
   }).node('hide', function () {
@@ -2191,6 +2184,7 @@ initialzr.addNode('widgets', 'loader', function (domWidget, props) {
     var indexUI = ui.index();
 
     renderers.render(indexUI);
+    renderers.show();
 
     globalEvents.dispatchWidgetReady(props.widget).interceptViewReady(function () {
       return renderers.hide();
@@ -2213,8 +2207,8 @@ initialzr.addNode('widgets', 'loader', function (domWidget, props) {
 /* globals initialzr, router, ammo */
 
 /**
- * Widget: Navigation
- */
+* Widget: Navigation
+*/
 
 initialzr.addNode('widgets', 'navigation', function (domWidget, props) {
   'use strict';
@@ -2222,11 +2216,11 @@ initialzr.addNode('widgets', 'navigation', function (domWidget, props) {
   var widget = ammo.app().schema('widget');
 
   widget.configure('ui').node('index', function (items) {
-    return '\n      <ul class="widget-list">\n        ' + (!props.layout ? items.map(function (item) {
-      return '\n          <li class="widget-item">\n            <a href="#" class="item trigger go-to" data-href="' + item.href + '">' + item.content + '</a>\n          </li>\n        ';
-    }).join('') : '') + '\n\n        ' + (props.layout === 'arrows' ? items.map(function (item) {
-      return '\n          <li class="widget-item">\n            <span class="label">' + item.content + '</span>\n            <a href="#" class="item trigger go-to" data-href="' + item.href + '">\n                <span class="icon fa fa-chevron-right"></span>\n            </a>\n          </li>\n        ';
-    }).join('') : '') + '\n      </ul>\n  ';
+    return '\n<ul class="widget-list">\n' + (!props.layout ? items.map(function (item) {
+      return '\n<li class="widget-item">\n<a href="#" class="item trigger go-to" data-href="' + item.href + '">' + item.content + '</a>\n</li>\n';
+    }).join('') : '') + '\n\n' + (props.layout === 'arrows' ? items.map(function (item) {
+      return '\n<li class="widget-item">\n<span class="label">' + item.content + '</span>\n<a href="#" class="item trigger go-to" data-href="' + item.href + '">\n<span class="icon fa fa-chevron-right"></span>\n</a>\n</li>\n';
+    }).join('') : '') + '\n</ul>\n';
   });
 
   widget.configure('events').node('onSelectItem', function (callback) {

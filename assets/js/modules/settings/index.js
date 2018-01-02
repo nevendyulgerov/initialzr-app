@@ -41,10 +41,8 @@ initialzr.addNode('modules', 'settings', () => {
         }
 
         const titleUI = ui.title('settings');
+        renderers.renderTitle(titleUI);
 
-        if (hasModule) {
-          renderers.renderTitle(titleUI);
-        }
         globalEvents.dispatchViewReady();
       }, 1500);
     });
