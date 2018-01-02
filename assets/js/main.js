@@ -15,11 +15,6 @@
     var err = function err(errText) {
       throw new Error('[Initialzr][Lib][Router]: ' + errText + '.');
     };
-    var notRoutedPaths = {
-      action: function action() {
-        err('No routes found');
-      }
-    };
     var _currentRoute = null;
     var initialRoute = null;
     var beforeRouteCallback = function beforeRouteCallback() {};
@@ -55,10 +50,6 @@
 
     var updateNotFoundRoute = function updateNotFoundRoute(callback) {
       notFoundCallback = ammo.isFunc(callback) ? callback : notFoundCallback;
-    };
-
-    var notFound = function notFound(options) {
-      notRoutedPaths = options;
     };
 
     var checkForRoute = function checkForRoute() {
@@ -165,16 +156,6 @@
       initialRoute = initialRoute + '#';
     };
 
-    var pollRouter = function pollRouter() {
-      var pollInterval = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 100;
-
-      if (!ammo.isNum(pollInterval)) {
-        err('Poll interval must be of type {number}');
-      }
-
-      listener(pollInterval);
-    };
-
     var getCurrentRoute = function getCurrentRoute() {
       return currentRoute;
     };
@@ -189,7 +170,7 @@
         initRouter();
 
         var pollInterval = ammo.isNum(options.poll) ? options.poll : 100;
-        pollRouter(pollInterval);
+        listener(pollInterval);
 
         return this;
       },
@@ -199,7 +180,6 @@
       },
 
       go: go,
-      notFound: notFound,
       getCurrentRoute: getCurrentRoute,
       getInitialRoute: getInitialRoute,
       beforeRoute: function beforeRoute(callback) {
@@ -2192,58 +2172,6 @@ initialzr.addNode('modules', 'settings', function () {
 });
 ;'use strict';
 
-/* globals initialzr, ammo */
-
-/**
-* Widget: Loader
-*/
-
-initialzr.addNode('widgets', 'loader', function (domWidget, props) {
-  'use strict';
-
-  var widget = ammo.app().schema('widget');
-  var globalEvents = initialzr.getNode('core', 'globalEvents')();
-
-  widget.configure('ui').node('index', function () {
-    return '\n<div class="loader-box">\n<div class="loader"></div>\n</div>\n';
-  });
-
-  widget.configure('renderers').node('render', function (widgetHtml) {
-    return domWidget.innerHTML = widgetHtml;
-  }).node('show', function () {
-    return domWidget.classList.add('active');
-  }).node('hide', function () {
-    return domWidget.classList.contains('active') && domWidget.classList.remove('active');
-  });
-
-  widget.configure('actions').node('init', function () {
-    var _widget$getNodes = widget.getNodes(),
-        ui = _widget$getNodes.ui,
-        renderers = _widget$getNodes.renderers;
-
-    var indexUI = ui.index();
-
-    renderers.render(indexUI);
-    renderers.show();
-
-    globalEvents.dispatchWidgetReady(props.widget).interceptViewReady(function () {
-      return renderers.hide();
-    }).interceptWidgetChange(props.widget, function (event, options) {
-      switch (options.type) {
-        case 'show':
-          return renderers.show();
-        case 'hide':
-          return renderers.hide();
-        default:
-          return false;
-      }
-    });
-  });
-
-  widget.callNode('actions', 'init');
-});
-;'use strict';
-
 /* globals initialzr, router, ammo */
 
 /**
@@ -2311,6 +2239,58 @@ initialzr.addNode('widgets', 'navigation', function (domWidget, props) {
       return item.getAttribute('data-href') === currentRoute;
     }).each(function (item) {
       return renderers.highlightItem(item.getAttribute('data-href'));
+    });
+  });
+
+  widget.callNode('actions', 'init');
+});
+;'use strict';
+
+/* globals initialzr, ammo */
+
+/**
+* Widget: Loader
+*/
+
+initialzr.addNode('widgets', 'loader', function (domWidget, props) {
+  'use strict';
+
+  var widget = ammo.app().schema('widget');
+  var globalEvents = initialzr.getNode('core', 'globalEvents')();
+
+  widget.configure('ui').node('index', function () {
+    return '\n<div class="loader-box">\n<div class="loader"></div>\n</div>\n';
+  });
+
+  widget.configure('renderers').node('render', function (widgetHtml) {
+    return domWidget.innerHTML = widgetHtml;
+  }).node('show', function () {
+    return domWidget.classList.add('active');
+  }).node('hide', function () {
+    return domWidget.classList.contains('active') && domWidget.classList.remove('active');
+  });
+
+  widget.configure('actions').node('init', function () {
+    var _widget$getNodes = widget.getNodes(),
+        ui = _widget$getNodes.ui,
+        renderers = _widget$getNodes.renderers;
+
+    var indexUI = ui.index();
+
+    renderers.render(indexUI);
+    renderers.show();
+
+    globalEvents.dispatchWidgetReady(props.widget).interceptViewReady(function () {
+      return renderers.hide();
+    }).interceptWidgetChange(props.widget, function (event, options) {
+      switch (options.type) {
+        case 'show':
+          return renderers.show();
+        case 'hide':
+          return renderers.hide();
+        default:
+          return false;
+      }
     });
   });
 

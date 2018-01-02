@@ -13,11 +13,6 @@
     const err = errText => {
       throw new Error(`[Initialzr][Lib][Router]: ${errText}.`);
     };
-    let notRoutedPaths = {
-      action() {
-        err('No routes found');
-      }
-    };
     let _currentRoute = null;
     let initialRoute = null;
     let beforeRouteCallback = () => {};
@@ -48,10 +43,6 @@
 
     const updateNotFoundRoute = callback => {
       notFoundCallback = ammo.isFunc(callback) ? callback : notFoundCallback;
-    };
-
-    const notFound = options => {
-      notRoutedPaths = options;
     };
 
     const checkForRoute = () => {
@@ -159,14 +150,6 @@
       initialRoute = `${initialRoute}#`;
     };
 
-    const pollRouter = (pollInterval = 100) => {
-      if (!ammo.isNum(pollInterval)) {
-        err('Poll interval must be of type {number}');
-      }
-
-      listener(pollInterval);
-    };
-
     const getCurrentRoute = () => currentRoute;
     const getInitialRoute = () => initialRoute;
 
@@ -175,7 +158,7 @@
         initRouter();
 
         const pollInterval = ammo.isNum(options.poll) ? options.poll : 100;
-        pollRouter(pollInterval);
+        listener(pollInterval);
 
         return this;
       },
@@ -184,7 +167,6 @@
         return this;
       },
       go,
-      notFound,
       getCurrentRoute,
       getInitialRoute,
       beforeRoute(callback) {
