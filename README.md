@@ -6,7 +6,7 @@ Base for custom event-driven single-page applications, created with the Ammo API
 
 ### Architecture
 
-This is a scaffolding app, which can be used as a base for event-driven single-page applications. This app utilizes a declarative, functional design, a custom router and the Ammo API.
+This is a scaffolding app, which can be used as a base for event-driven single-page applications. This app utilizes a declarative, functional design, a custom hash-based router and the Ammo API.
 
 The app comes preconfigured to handle scss preprocessing and js concatenation. These two methods are uses to create a single stylesheet and a single javascript file, served to index.html - the app's entrypoint. The single unified stylesheet contains all style definitions from appDir/assets/sass. The single unified javascript file contains all script definitions from appDir/assets/js.
 
