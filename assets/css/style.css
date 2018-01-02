@@ -6763,6 +6763,14 @@ body[data-view="settings"] [data-module="header"] nav ul li {
 }
 
 /**
+ * Styles for module 'notFound'
+ */
+[data-module="notFound"] {
+  height: calc(100vh - 120px);
+  background-color: #313134;
+}
+
+/**
  * Styles for module 'settings'
  */
 [data-module="settings"] {

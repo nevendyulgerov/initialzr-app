@@ -17,13 +17,14 @@
     };
     var notRoutedPaths = {
       action: function action() {
-        err('No routes found.');
+        err('No routes found');
       }
     };
     var _currentRoute = null;
     var initialRoute = null;
     var beforeRouteCallback = function beforeRouteCallback() {};
     var afterRouteCallback = function afterRouteCallback() {};
+    var notFoundCallback = function notFoundCallback() {};
 
     var addRoute = function addRoute() {
       var path = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
@@ -50,6 +51,10 @@
 
     var updateAfterRoute = function updateAfterRoute(callback) {
       afterRouteCallback = ammo.isFunc(callback) ? callback : afterRouteCallback;
+    };
+
+    var updateNotFoundRoute = function updateNotFoundRoute(callback) {
+      notFoundCallback = ammo.isFunc(callback) ? callback : notFoundCallback;
     };
 
     var notFound = function notFound(options) {
@@ -85,9 +90,10 @@
       }
 
       if (!isMatch) {
-        return executeNoRoutedPath();
+        notFoundCallback();
+      } else {
+        executeRouteAction(route);
       }
-      executeRouteAction(route);
       afterRouteCallback();
     };
 
@@ -99,12 +105,6 @@
 
       if (route.action) {
         route.action(params, query);
-      }
-    };
-
-    var executeNoRoutedPath = function executeNoRoutedPath() {
-      if (ammo.isFunc(notRoutedPaths.action)) {
-        notRoutedPaths.action();
       }
     };
 
@@ -202,6 +202,10 @@
       },
       afterRoute: function afterRoute(callback) {
         updateAfterRoute(callback);
+        return this;
+      },
+      notFoundRoute: function notFoundRoute(callback) {
+        updateNotFoundRoute(callback);
         return this;
       },
       poll: function poll(interval) {
@@ -1821,7 +1825,7 @@ initialzr.addNode('core', 'router', function () {
       modules.header();
       manager.monitorWidgets().notifyBodyUponViewLoading();
     }
-  }).afterRoute(modules.footer).route('/', modules.dashboard).route('/login', modules.login).route('/settings', modules.settings);
+  }).afterRoute(modules.footer).notFoundRoute(modules.notFound).route('/', modules.dashboard).route('/login', modules.login).route('/settings', modules.settings);
 });
 ;'use strict';
 
@@ -1853,7 +1857,7 @@ initialzr.addNode('modules', 'base', function (options) {
   var module = ammo.app().schema('module');
 
   module.configure('ui').node('index', function () {
-    return '\n<div data-module="' + options.name + '">\n<span class="title">Module [' + options.name.toUpperCase() + ']</span>\n</div>\n';
+    return '\n<div data-module="' + options.name + '" ' + (options.isView ? 'data-view' : '') + '>\n<span class="title">' + options.name.toUpperCase() + '</span>\n</div>\n';
   });
 
   module.configure('renderers').node('render', function (ui) {
@@ -2093,6 +2097,40 @@ initialzr.addNode('modules', 'login', function () {
 
       globalEvents.dispatchViewReady();
     }, 1500);
+  });
+
+  module.callNode('actions', 'init');
+});
+;'use strict';
+
+/* globals initialzr */
+
+initialzr.addNode('modules', 'notFound', function () {
+  'use strict';
+
+  var module = initialzr.getNode('modules', 'base')({
+    name: 'notFound',
+    isView: true
+  });
+  var globalEvents = initialzr.getNode('core', 'globalEvents')();
+
+  module.overwrite('ui').node('index', function (title) {
+    return '\n<div data-module="notFound" data-view>\n<span class="title">' + title.toUpperCase() + '</span>\n</div>\n';
+  });
+
+  module.configure('ui').node('title', function (title) {
+    return '<span class="title">' + title.toUpperCase() + '</span>';
+  });
+
+  module.overwrite('actions').node('init', function () {
+    var _module$getNodes = module.getNodes(),
+        ui = _module$getNodes.ui,
+        renderers = _module$getNodes.renderers;
+
+    var indexUI = ui.index('not found');
+
+    renderers.render(indexUI);
+    globalEvents.dispatchViewReady();
   });
 
   module.callNode('actions', 'init');

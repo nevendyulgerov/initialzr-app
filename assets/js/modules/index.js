@@ -11,8 +11,8 @@ initialzr.addNode('modules', 'base', options => {
 
   module.configure('ui')
     .node('index', () => (`
-      <div data-module="${options.name}">
-        <span class="title">Module [${options.name.toUpperCase()}]</span>
+      <div data-module="${options.name}" ${options.isView ? 'data-view' : ''}>
+        <span class="title">${options.name.toUpperCase()}</span>
       </div>
     `));
 

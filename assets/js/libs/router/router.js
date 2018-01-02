@@ -15,13 +15,14 @@
     };
     let notRoutedPaths = {
       action() {
-        err('No routes found.');
+        err('No routes found');
       }
     };
     let _currentRoute = null;
     let initialRoute = null;
     let beforeRouteCallback = () => {};
     let afterRouteCallback = () => {};
+    let notFoundCallback = () => {};
 
     const addRoute = (path = '', action = () => {}) => {
       if (!ammo.isStr(path)) {
@@ -43,6 +44,10 @@
 
     const updateAfterRoute = callback => {
       afterRouteCallback = ammo.isFunc(callback) ? callback : afterRouteCallback;
+    };
+
+    const updateNotFoundRoute = callback => {
+      notFoundCallback = ammo.isFunc(callback) ? callback : notFoundCallback;
     };
 
     const notFound = options => {
@@ -78,9 +83,10 @@
       }
 
       if (!isMatch) {
-        return executeNoRoutedPath();
+        notFoundCallback();
+      } else {
+        executeRouteAction(route);
       }
-      executeRouteAction(route);
       afterRouteCallback();
     };
 
@@ -92,12 +98,6 @@
 
       if (route.action) {
         route.action(params, query);
-      }
-    };
-
-    const executeNoRoutedPath = () => {
-      if (ammo.isFunc(notRoutedPaths.action)) {
-        notRoutedPaths.action();
       }
     };
 
@@ -189,6 +189,10 @@
       },
       afterRoute(callback) {
         updateAfterRoute(callback);
+        return this;
+      },
+      notFoundRoute(callback) {
+        updateNotFoundRoute(callback);
         return this;
       },
       poll(interval) {

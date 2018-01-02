@@ -24,6 +24,7 @@ initialzr.addNode('core', 'router', () => {
       }
     })
     .afterRoute(modules.footer)
+    .notFoundRoute(modules.notFound)
     .route('/', modules.dashboard)
     .route('/login', modules.login)
     .route('/settings', modules.settings);
