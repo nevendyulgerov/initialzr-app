@@ -123,6 +123,10 @@ gulp.task('widget', () => {
 gulp.task('app:dist', done => {
   'use strict';
 
+  if (!fs.existsSync('./dist')){
+    fs.mkdirSync('./dist');
+  }
+
   sequence([
     'dist:js',
     'dist:sass',
