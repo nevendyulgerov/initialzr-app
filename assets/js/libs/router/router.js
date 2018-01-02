@@ -171,8 +171,12 @@
     const getInitialRoute = () => initialRoute;
 
     return {
-      init() {
+      init(options = {}) {
         initRouter();
+
+        const pollInterval = ammo.isNum(options.poll) ? options.poll : 100;
+        pollRouter(pollInterval);
+
         return this;
       },
       route(path, action) {
@@ -193,10 +197,6 @@
       },
       notFoundRoute(callback) {
         updateNotFoundRoute(callback);
-        return this;
-      },
-      poll(interval) {
-        pollRouter(interval);
         return this;
       }
     };

@@ -11,8 +11,7 @@ initialzr.addNode('core', 'router', () => {
   const manager = initialzr.getNode('core', 'manager')();
   const persistentModules = ['header'];
 
-  router.init()
-    .poll(150)
+  router.init({ poll: 150 })
     .beforeRoute(() => {
       manager.removeModules(persistentModules);
 

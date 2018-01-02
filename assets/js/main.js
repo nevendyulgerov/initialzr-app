@@ -184,7 +184,13 @@
 
     return {
       init: function init() {
+        var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
         initRouter();
+
+        var pollInterval = ammo.isNum(options.poll) ? options.poll : 100;
+        pollRouter(pollInterval);
+
         return this;
       },
       route: function route(path, action) {
@@ -206,10 +212,6 @@
       },
       notFoundRoute: function notFoundRoute(callback) {
         updateNotFoundRoute(callback);
-        return this;
-      },
-      poll: function poll(interval) {
-        pollRouter(interval);
         return this;
       }
     };
@@ -1818,7 +1820,7 @@ initialzr.addNode('core', 'router', function () {
   var manager = initialzr.getNode('core', 'manager')();
   var persistentModules = ['header'];
 
-  router.init().poll(150).beforeRoute(function () {
+  router.init({ poll: 150 }).beforeRoute(function () {
     manager.removeModules(persistentModules);
 
     if (!manager.domContainsModule('header')) {
