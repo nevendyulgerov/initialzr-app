@@ -48,18 +48,18 @@
     const checkForRoute = () => {
       let isMatch = false;
       let route = null;
-      let current_params = currentRoute.split('/');
+      let currentParams = currentRoute.split('/');
 
       beforeRouteCallback();
 
       for (let r = 0; r < routes.length; r++) {
         let routedParams = routes[r].path.split('/');
 
-        if (current_params.length === routedParams.length) {
+        if (currentParams.length === routedParams.length) {
           let isParamsMatch = true;
-          for (let i = 0; i < current_params.length; i++) {
+          for (let i = 0; i < currentParams.length; i++) {
             if (routedParams[i][0] !== ':') {
-              if (routedParams[i] !== current_params[i]) {
+              if (routedParams[i] !== currentParams[i]) {
                 isParamsMatch = false;
                 break;
               }

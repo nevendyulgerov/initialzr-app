@@ -55,18 +55,18 @@
     var checkForRoute = function checkForRoute() {
       var isMatch = false;
       var route = null;
-      var current_params = currentRoute.split('/');
+      var currentParams = currentRoute.split('/');
 
       beforeRouteCallback();
 
       for (var r = 0; r < routes.length; r++) {
         var routedParams = routes[r].path.split('/');
 
-        if (current_params.length === routedParams.length) {
+        if (currentParams.length === routedParams.length) {
           var isParamsMatch = true;
-          for (var i = 0; i < current_params.length; i++) {
+          for (var i = 0; i < currentParams.length; i++) {
             if (routedParams[i][0] !== ':') {
-              if (routedParams[i] !== current_params[i]) {
+              if (routedParams[i] !== currentParams[i]) {
                 isParamsMatch = false;
                 break;
               }
@@ -1869,6 +1869,44 @@ initialzr.addNode('modules', 'base', function (options) {
 
 /* globals initialzr */
 
+initialzr.addNode('modules', 'footer', function () {
+  'use strict';
+
+  var module = initialzr.getNode('modules', 'base')({ name: 'footer' });
+  var globalEvents = initialzr.getNode('core', 'globalEvents')();
+
+  module.configure('ui').node('navigation', function (items) {
+    return '\n<nav>\n<div data-widget="navigation" data-show-on="loading">\n' + items.map(function (item) {
+      return '\n<div class="item" data-href="' + item.url + '">' + item.name + '</div>\n';
+    }).join('') + '\n</div>\n</nav>\n';
+  });
+
+  module.overwrite('ui').node('index', function (navigationUI) {
+    return '<footer data-module="footer">' + navigationUI + '</footer>';
+  });
+
+  module.overwrite('actions').node('getNavigationItems', function () {
+    return [{ name: 'Home', url: '/' }, { name: 'Jokes', url: '/jokes' }, { name: 'Login', url: '/login' }, { name: 'Settings', url: '/settings' }];
+  }).node('init', function () {
+    var _module$getNodes = module.getNodes(),
+        ui = _module$getNodes.ui,
+        renderers = _module$getNodes.renderers,
+        actions = _module$getNodes.actions;
+
+    var navigationItems = actions.getNavigationItems();
+    var navigationUI = ui.navigation(navigationItems);
+    var indexUI = ui.index(navigationUI);
+
+    renderers.render(indexUI);
+    globalEvents.dispatchViewLoading();
+  });
+
+  module.callNode('actions', 'init');
+});
+;'use strict';
+
+/* globals initialzr */
+
 /**
 * Module: Dashboard
 */
@@ -1908,44 +1946,6 @@ initialzr.addNode('modules', 'dashboard', function () {
 
       globalEvents.dispatchViewReady();
     }, 1500);
-  });
-
-  module.callNode('actions', 'init');
-});
-;'use strict';
-
-/* globals initialzr */
-
-initialzr.addNode('modules', 'footer', function () {
-  'use strict';
-
-  var module = initialzr.getNode('modules', 'base')({ name: 'footer' });
-  var globalEvents = initialzr.getNode('core', 'globalEvents')();
-
-  module.configure('ui').node('navigation', function (items) {
-    return '\n<nav>\n<div data-widget="navigation" data-show-on="loading">\n' + items.map(function (item) {
-      return '\n<div class="item" data-href="' + item.url + '">' + item.name + '</div>\n';
-    }).join('') + '\n</div>\n</nav>\n';
-  });
-
-  module.overwrite('ui').node('index', function (navigationUI) {
-    return '<footer data-module="footer">' + navigationUI + '</footer>';
-  });
-
-  module.overwrite('actions').node('getNavigationItems', function () {
-    return [{ name: 'Home', url: '/' }, { name: 'Jokes', url: '/jokes' }, { name: 'Login', url: '/login' }, { name: 'Settings', url: '/settings' }];
-  }).node('init', function () {
-    var _module$getNodes = module.getNodes(),
-        ui = _module$getNodes.ui,
-        renderers = _module$getNodes.renderers,
-        actions = _module$getNodes.actions;
-
-    var navigationItems = actions.getNavigationItems();
-    var navigationUI = ui.navigation(navigationItems);
-    var indexUI = ui.index(navigationUI);
-
-    renderers.render(indexUI);
-    globalEvents.dispatchViewLoading();
   });
 
   module.callNode('actions', 'init');
