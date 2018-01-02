@@ -13,10 +13,10 @@ const babel = require('gulp-babel');
 const minify = require('gulp-minify');
 const sequence = require('run-sequence');
 const bulkSass = require('gulp-sass-bulk-import');
-const buildTools = require('./build/build');
 const rename = require('gulp-rename');
 const trimLines = require('gulp-trimlines');
 const liveReload = require('gulp-livereload');
+const buildTools = require('./build/build');
 
 // define js paths
 const jsPaths = [
@@ -40,7 +40,10 @@ const sassPaths = [
 gulp.task('app:watch', done => {
   'use strict';
   liveReload.listen();
-  sequence(['sass:watch', 'js:watch'], done);
+  sequence([
+    'sass:watch',
+    'js:watch'
+  ], done);
 });
 
 // watch sass files and re-compile on save
