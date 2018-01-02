@@ -379,7 +379,7 @@
      * @param index
      * @returns {*}
      */
-    const recurIter = (handler, complete, index) => {
+    const recurIter = (handler, complete = () => {}, index) => {
       index = index || 0;
       handler(index, (canRecur) => {
         if (!canRecur) {

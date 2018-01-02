@@ -24,6 +24,7 @@ initialzr.addNode('modules', 'footer', () => {
     .node('getNavigationItems', () => {
       return [
         { name: 'Home', url: '/' },
+        { name: 'Jokes', url: '/jokes' },
         { name: 'Login', url: '/login' },
         { name: 'Settings', url: '/settings' }
       ];

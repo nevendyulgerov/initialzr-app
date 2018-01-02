@@ -1,0 +1,36 @@
+/**
+ * Styles for module 'jokes'
+ */
+
+[data-module="jokes"] {
+  height: calc(100vh - 120px);
+  background-color: $light-red;
+  flex-direction: column;
+  overflow-y: auto;
+
+  .jokes-list {
+    width: 420px;
+    max-width: 100%;
+    max-height: calc(80vh - 20px);
+    padding: 10px 0;
+
+    .joke {
+      width: calc(100% - 20px);
+      box-shadow: $box-shadow-1;
+      padding: 10px;
+      background-color: $void;
+      color: $white;
+      border-radius: 2px;
+      margin: 0 0 10px 0;
+
+      .setup {
+        margin: 0 0 10px 0;
+      }
+
+      .punchline {
+        font-weight: 300;
+        margin: 0;
+      }
+    }
+  }
+}

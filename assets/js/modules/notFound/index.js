@@ -3,10 +3,7 @@
 initialzr.addNode('modules', 'notFound', () => {
   'use strict';
 
-  const module = initialzr.getNode('modules', 'base')({
-    name: 'notFound',
-    isView: true
-  });
+  const module = initialzr.getNode('modules', 'base')({ name: 'notFound' });
   const globalEvents = initialzr.getNode('core', 'globalEvents')();
 
   module.overwrite('ui')

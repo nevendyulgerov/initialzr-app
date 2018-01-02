@@ -79,6 +79,22 @@ body[data-view="home"] {
   }
 }
 
+body[data-view="jokes"] {
+  [data-module="footer"] {
+    nav {
+      ul {
+        li {
+          a {
+            &:after {
+              background-color: $light-red;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 body[data-view="login"] {
   [data-module="footer"] {
     nav {

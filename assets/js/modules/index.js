@@ -23,7 +23,7 @@ initialzr.addNode('modules', 'base', options => {
     })
     .node('renderTitle', ui => {
       const domModule = ammo.select(`[data-module="${options.name}"`).get();
-      ammo.appendBefore(ui, domModule);
+      ammo.prependAfter(ui, domModule);
     });
 
   module.configure('actions')

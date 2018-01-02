@@ -6609,6 +6609,10 @@ body[data-view="home"] [data-module="footer"] nav ul li a:after {
   background-color: #4714f6;
 }
 
+body[data-view="jokes"] [data-module="footer"] nav ul li a:after {
+  background-color: rgba(217, 30, 24, 0.5);
+}
+
 body[data-view="login"] [data-module="footer"] nav ul li a:after {
   background-color: #bf55ec;
 }
@@ -6724,6 +6728,10 @@ body[data-view="home"] [data-module="header"] nav ul li {
   border-right: 1px solid #4714f6;
 }
 
+body[data-view="jokes"] [data-module="header"] nav ul li {
+  border-right: 1px solid rgba(217, 30, 24, 0.5);
+}
+
 body[data-view="login"] [data-module="header"] nav ul li {
   border-right: 1px solid #bf55ec;
 }
@@ -6752,6 +6760,43 @@ body[data-view="settings"] [data-module="header"] nav ul li {
   font-size: 38px;
   font-weight: 600;
   text-shadow: 4px 3px 0 #a239ca;
+}
+
+/**
+ * Styles for module 'jokes'
+ */
+[data-module="jokes"] {
+  height: calc(100vh - 120px);
+  background-color: rgba(217, 30, 24, 0.5);
+  -ms-flex-direction: column;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+[data-module="jokes"] .jokes-list {
+  width: 420px;
+  max-width: 100%;
+  max-height: calc(80vh - 20px);
+  padding: 10px 0;
+}
+
+[data-module="jokes"] .jokes-list .joke {
+  width: calc(100% - 20px);
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  padding: 10px;
+  background-color: #0e0b16;
+  color: #fff;
+  border-radius: 2px;
+  margin: 0 0 10px 0;
+}
+
+[data-module="jokes"] .jokes-list .joke .setup {
+  margin: 0 0 10px 0;
+}
+
+[data-module="jokes"] .jokes-list .joke .punchline {
+  font-weight: 300;
+  margin: 0;
 }
 
 /**

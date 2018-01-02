@@ -583,7 +583,10 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
     * @param index
     * @returns {*}
     */
-    var recurIter = function recurIter(handler, complete, index) {
+    var recurIter = function recurIter(handler) {
+      var complete = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : function () {};
+      var index = arguments[2];
+
       index = index || 0;
       handler(index, function (canRecur) {
         if (!canRecur) {
@@ -1807,7 +1810,7 @@ initialzr.addNode('core', 'router', function () {
       modules.header();
       manager.monitorWidgets().notifyBodyUponViewLoading();
     }
-  }).afterRoute(modules.footer).notFoundRoute(modules.notFound).route('/', modules.dashboard).route('/login', modules.login).route('/settings', modules.settings);
+  }).afterRoute(modules.footer).notFoundRoute(modules.notFound).route('/', modules.dashboard).route('/jokes', modules.jokes).route('/login', modules.login).route('/settings', modules.settings);
 });
 ;'use strict';
 
@@ -1847,7 +1850,7 @@ initialzr.addNode('modules', 'base', function (options) {
     ammo.appendBefore(ui, target);
   }).node('renderTitle', function (ui) {
     var domModule = ammo.select('[data-module="' + options.name + '"').get();
-    ammo.appendBefore(ui, domModule);
+    ammo.prependAfter(ui, domModule);
   });
 
   module.configure('actions').node('init', function () {
@@ -1930,7 +1933,7 @@ initialzr.addNode('modules', 'footer', function () {
   });
 
   module.overwrite('actions').node('getNavigationItems', function () {
-    return [{ name: 'Home', url: '/' }, { name: 'Login', url: '/login' }, { name: 'Settings', url: '/settings' }];
+    return [{ name: 'Home', url: '/' }, { name: 'Jokes', url: '/jokes' }, { name: 'Login', url: '/login' }, { name: 'Settings', url: '/settings' }];
   }).node('init', function () {
     var _module$getNodes = module.getNodes(),
         ui = _module$getNodes.ui,
@@ -2008,7 +2011,7 @@ initialzr.addNode('modules', 'header', function () {
   });
 
   module.configure('actions').node('getNavigationItems', function () {
-    return [{ name: 'Home', url: '/' }, { name: 'Login', url: '/login' }, { name: 'Settings', url: '/settings' }];
+    return [{ name: 'Home', url: '/' }, { name: 'Jokes', url: '/jokes' }, { name: 'Login', url: '/login' }, { name: 'Settings', url: '/settings' }];
   });
 
   module.overwrite('actions').node('init', function () {
@@ -2031,6 +2034,92 @@ initialzr.addNode('modules', 'header', function () {
         return renderers.resizeHeader();
       });
     });
+  });
+
+  module.callNode('actions', 'init');
+});
+;'use strict';
+
+/* globals initialzr, ammo */
+
+initialzr.addNode('modules', 'jokes', function () {
+  'use strict';
+
+  var baseModule = initialzr.getNode('modules', 'base')({ name: 'jokes' });
+  var props = {
+    strongTypes: true
+  };
+  var state = {
+    jokes: { type: 'array', value: [] }
+  };
+  var module = ammo.app(props, state).inherit(baseModule);
+  var manager = initialzr.getNode('core', 'manager')();
+  var globalEvents = initialzr.getNode('core', 'globalEvents')();
+
+  module.configure('ui').node('title', function (title) {
+    return '<span class="title">' + title.toUpperCase() + '</span>';
+  }).node('joke', function (joke) {
+    return '\n<div class="joke" data-type="' + joke.type + '" data-id="' + joke.id + '" title="' + joke.type + '">\n<p class="setup" title="Setup">' + joke.setup + '</p>\n<p class="punchline" title="Punchline">' + joke.punchline + '</p>\n</div>\n';
+  });
+
+  module.overwrite('ui').node('index', function () {
+    return '\n<div data-module="jokes" data-view>\n<div data-widget="loader" data-show-on="loading"></div>\n<div class="jokes-list"></div>\n</div>\n';
+  });
+
+  module.configure('renderers').node('renderJoke', function (jokeUI) {
+    var domModule = ammo.select('[data-module="jokes"]').get();
+    if (!domModule) {
+      return false;
+    }
+    var jokesList = ammo.select('.jokes-list', domModule).get();
+    ammo.appendBefore(jokeUI, jokesList);
+  });
+
+  module.configure('actions').node('getJokes', function (callback) {
+    ammo.request({
+      url: 'https://08ad1pao69.execute-api.us-east-1.amazonaws.com/dev/random_ten',
+      callback: callback
+    });
+  });
+
+  module.overwrite('actions').node('init', function () {
+    var _module$getNodes = module.getNodes(),
+        ui = _module$getNodes.ui,
+        renderers = _module$getNodes.renderers,
+        actions = _module$getNodes.actions;
+
+    var indexUI = ui.index();
+    renderers.render(indexUI);
+
+    // simulate loading
+    setTimeout(function () {
+      if (!manager.domContainsModule('jokes')) {
+        return false;
+      }
+
+      var titleUI = ui.title('jokes');
+      renderers.renderTitle(titleUI);
+      globalEvents.dispatchViewReady();
+
+      actions.getJokes(function (err, jokes) {
+        if (err) {
+          return console.error(err);
+        }
+
+        module.updateStore('jokes', function () {
+          return jokes;
+        });
+
+        ammo.recurIter(function (index, resolve) {
+          var joke = jokes[index];
+          var jokeUI = ui.joke(joke);
+          renderers.renderJoke(jokeUI);
+          setTimeout(function () {
+            return resolve(index + 1 < jokes.length);
+          }, 300);
+        });
+      });
+    }, 1500);
   });
 
   module.callNode('actions', 'init');
@@ -2090,10 +2179,7 @@ initialzr.addNode('modules', 'login', function () {
 initialzr.addNode('modules', 'notFound', function () {
   'use strict';
 
-  var module = initialzr.getNode('modules', 'base')({
-    name: 'notFound',
-    isView: true
-  });
+  var module = initialzr.getNode('modules', 'base')({ name: 'notFound' });
   var globalEvents = initialzr.getNode('core', 'globalEvents')();
 
   module.overwrite('ui').node('index', function (title) {
@@ -2172,6 +2258,58 @@ initialzr.addNode('modules', 'settings', function () {
 });
 ;'use strict';
 
+/* globals initialzr, ammo */
+
+/**
+* Widget: Loader
+*/
+
+initialzr.addNode('widgets', 'loader', function (domWidget, props) {
+  'use strict';
+
+  var widget = ammo.app().schema('widget');
+  var globalEvents = initialzr.getNode('core', 'globalEvents')();
+
+  widget.configure('ui').node('index', function () {
+    return '\n<div class="loader-box">\n<div class="loader"></div>\n</div>\n';
+  });
+
+  widget.configure('renderers').node('render', function (widgetHtml) {
+    return domWidget.innerHTML = widgetHtml;
+  }).node('show', function () {
+    return domWidget.classList.add('active');
+  }).node('hide', function () {
+    return domWidget.classList.contains('active') && domWidget.classList.remove('active');
+  });
+
+  widget.configure('actions').node('init', function () {
+    var _widget$getNodes = widget.getNodes(),
+        ui = _widget$getNodes.ui,
+        renderers = _widget$getNodes.renderers;
+
+    var indexUI = ui.index();
+
+    renderers.render(indexUI);
+    renderers.show();
+
+    globalEvents.dispatchWidgetReady(props.widget).interceptViewReady(function () {
+      return renderers.hide();
+    }).interceptWidgetChange(props.widget, function (event, options) {
+      switch (options.type) {
+        case 'show':
+          return renderers.show();
+        case 'hide':
+          return renderers.hide();
+        default:
+          return false;
+      }
+    });
+  });
+
+  widget.callNode('actions', 'init');
+});
+;'use strict';
+
 /* globals initialzr, router, ammo */
 
 /**
@@ -2239,58 +2377,6 @@ initialzr.addNode('widgets', 'navigation', function (domWidget, props) {
       return item.getAttribute('data-href') === currentRoute;
     }).each(function (item) {
       return renderers.highlightItem(item.getAttribute('data-href'));
-    });
-  });
-
-  widget.callNode('actions', 'init');
-});
-;'use strict';
-
-/* globals initialzr, ammo */
-
-/**
-* Widget: Loader
-*/
-
-initialzr.addNode('widgets', 'loader', function (domWidget, props) {
-  'use strict';
-
-  var widget = ammo.app().schema('widget');
-  var globalEvents = initialzr.getNode('core', 'globalEvents')();
-
-  widget.configure('ui').node('index', function () {
-    return '\n<div class="loader-box">\n<div class="loader"></div>\n</div>\n';
-  });
-
-  widget.configure('renderers').node('render', function (widgetHtml) {
-    return domWidget.innerHTML = widgetHtml;
-  }).node('show', function () {
-    return domWidget.classList.add('active');
-  }).node('hide', function () {
-    return domWidget.classList.contains('active') && domWidget.classList.remove('active');
-  });
-
-  widget.configure('actions').node('init', function () {
-    var _widget$getNodes = widget.getNodes(),
-        ui = _widget$getNodes.ui,
-        renderers = _widget$getNodes.renderers;
-
-    var indexUI = ui.index();
-
-    renderers.render(indexUI);
-    renderers.show();
-
-    globalEvents.dispatchWidgetReady(props.widget).interceptViewReady(function () {
-      return renderers.hide();
-    }).interceptWidgetChange(props.widget, function (event, options) {
-      switch (options.type) {
-        case 'show':
-          return renderers.show();
-        case 'hide':
-          return renderers.hide();
-        default:
-          return false;
-      }
     });
   });
 
