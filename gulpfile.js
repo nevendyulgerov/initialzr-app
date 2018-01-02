@@ -16,6 +16,7 @@ const bulkSass = require('gulp-sass-bulk-import');
 const buildTools = require('./build/build');
 const rename = require('gulp-rename');
 const trimLines = require('gulp-trimlines');
+const liveReload = require('gulp-livereload');
 
 // define js paths
 const jsPaths = [
@@ -38,6 +39,7 @@ const sassPaths = [
 // watch js/sass files and re-compile on save
 gulp.task('app:watch', done => {
   'use strict';
+  liveReload.listen();
   sequence(['sass:watch', 'js:watch'], done);
 });
 
@@ -57,7 +59,7 @@ gulp.task('js:watch', () => {
 gulp.task('sass:preprocess', () => {
   'use strict';
 
-  return gulp.src('./assets/sass/style.scss')
+  gulp.src('./assets/sass/style.scss')
     .pipe(bulkSass())
     .pipe(sourcemaps.init())
     .pipe(sass(
@@ -68,20 +70,22 @@ gulp.task('sass:preprocess', () => {
       cascade: false
     }))
     .pipe(sourcemaps.write('./'))
-    .pipe(gulp.dest('./assets/css/'));
+    .pipe(gulp.dest('./assets/css/'))
+    .pipe(liveReload());
 });
 
 // concatenate all js files
 gulp.task('js:concat', () => {
   'use strict';
-  return gulp.src(jsPaths)
+  gulp.src(jsPaths)
     .pipe(trimLines())
     .pipe(sourcemaps.init())
     .pipe(babel({ presets: ['es2015'] }))
     .pipe(concat('main.js', {
       newLine: '\n;'
     }))
-    .pipe(gulp.dest('./assets/js/'));
+    .pipe(gulp.dest('./assets/js/'))
+    .pipe(liveReload());
 });
 
 // create module files
@@ -141,7 +145,7 @@ gulp.task('dist:js', () => {
 gulp.task('dist:sass', () => {
   'use strict';
 
-  return gulp.src('./assets/sass/style.scss')
+  gulp.src('./assets/sass/style.scss')
     .pipe(bulkSass())
     .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
     .pipe(autoprefixer({
@@ -178,7 +182,7 @@ gulp.task('dist:html', () => {
       .replace('style.css', `style.min.css`);
 
     fs.writeFile('./dist/index.html', content, (err) => {
-      if ( err ) {
+      if (err) {
         return console.log(err);
       }
     });
